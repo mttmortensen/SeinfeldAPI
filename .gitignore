@@ -361,3 +361,15 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Visual Studio settings
+.vs/
+SeinfeldAPI.http
+Properties/launchSettings.json
+
+# User settings
+*.user
+*.suo
+
+# Logs and build artifacts
+*.log
