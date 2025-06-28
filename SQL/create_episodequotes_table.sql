@@ -1,0 +1,7 @@
+CREATE TABLE EpisodeQuotes (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    EpisodeId INT NOT NULL,
+    Quote NVARCHAR(MAX) NOT NULL,
+    Character NVARCHAR(100) NOT NULL,
+    FOREIGN KEY (EpisodeId) REFERENCES Episodes(Id) ON DELETE CASCADE
+);
