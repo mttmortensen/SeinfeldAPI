@@ -47,5 +47,21 @@ namespace SeinfeldAPI.Repo
         {
             _context.Episodes.Update(episode);
         }
+
+        // Finds and removes an episode by Id
+        public void DeleteEpisode(int id) 
+        {
+            var episode = _context.Episodes.Find(id);
+
+            if (episode != null)
+                _context.Episodes.Remove(episode);
+        }
+
+        // Saves all changes made so far (post/update/delete)
+        public bool SaveChanges() 
+        {
+            //returns true if something changed
+            return _context.SaveChanges() > 0; 
+        }
     }
 }
