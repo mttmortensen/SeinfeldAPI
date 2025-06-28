@@ -1,6 +1,6 @@
 ﻿using SeinfeldAPI.Models;
 
-namespace SeinfeldAPI.Repo
+namespace SeinfeldAPI.Interfaces
 {
     public interface IEpisodeRepository
     {
