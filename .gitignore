@@ -366,6 +366,10 @@ FodyWeavers.xsd
 .vs/
 SeinfeldAPI.http
 Properties/launchSettings.json
+SeinfeldAPI.csproj
+SeinfeldAPI.sln
+appsettings.Development.json
+appsettings.json
 
 # User settings
 *.user
