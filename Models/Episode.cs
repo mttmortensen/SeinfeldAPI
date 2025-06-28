@@ -7,5 +7,6 @@
         public string Season { get; set; }
         public string EpisodeNumber { get; set; }
         public string AirDate { get; set; }
+        public Dictionary<string, string> Quotes { get; set; }
     }
 }
