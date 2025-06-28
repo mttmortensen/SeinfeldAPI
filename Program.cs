@@ -1,4 +1,7 @@
 
+using SeinfeldAPI.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace SeinfeldAPI
 {
     public class Program
@@ -12,6 +15,10 @@ namespace SeinfeldAPI
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+
+            // DB Connection Service
+            builder.Services.AddDbContext<SeinfeldDbContext>(options => 
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 
