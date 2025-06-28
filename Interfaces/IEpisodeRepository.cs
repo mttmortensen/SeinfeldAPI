@@ -7,7 +7,7 @@ namespace SeinfeldAPI.Interfaces
         List<Episode> GetAllEpisodes();
         Episode? GetEpisodeById(int id);
 
-        // These methods would be used right away
+        // These methods wouldn't be used right away
         // But just declaring them for now
         void AddEpisode(Episode episode);
         void UpdateEpisode(Episode episode);
