@@ -1,6 +1,8 @@
 
 using SeinfeldAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using SeinfeldAPI.Interfaces;
+using SeinfeldAPI.Models;
 
 namespace SeinfeldAPI
 {
@@ -11,7 +13,7 @@ namespace SeinfeldAPI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
+            builder.Services.AddScoped<IEpisodeRepository, IEpisodeRepository>();
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
