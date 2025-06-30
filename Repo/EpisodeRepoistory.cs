@@ -34,7 +34,7 @@ namespace SeinfeldAPI.Repo
 
 
         // ==== These haven't been made yet in _context
-        // ==== They're just inhireting the methods from DbContext Interface
+        // ==== They're just inheriting the methods from DbContext Interface
 
         // Adds a new option to the database
         public void AddEpisode(Episode episode) 
