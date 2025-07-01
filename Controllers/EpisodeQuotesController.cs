@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SeinfeldAPI.Models;
-using SeinfeldAPI.Services;
+using SeinfeldAPI.Interfaces;
 
 namespace SeinfeldAPI.Controllers
 {
@@ -12,10 +12,10 @@ namespace SeinfeldAPI.Controllers
     public class EpisodeQuotesController : ControllerBase
     {
         // Service that handles all quote logic
-        private readonly EpisodeQuotesService _quotesService;
+        private readonly IEpisodeQuotesService _quotesService;
 
         // Inject the EpisodeQuotesService through constructor
-        public EpisodeQuotesController(EpisodeQuotesService quotesService)
+        public EpisodeQuotesController(IEpisodeQuotesService quotesService)
         {
             _quotesService = quotesService;
         }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SeinfeldAPI.Services;
+using SeinfeldAPI.Interfaces;
 using SeinfeldAPI.Models;
 
 namespace SeinfeldAPI.Controllers
@@ -12,10 +12,10 @@ namespace SeinfeldAPI.Controllers
     public class EpisodeController : ControllerBase
     {
         // Service that contains logic for managing episodes
-        private readonly EpisodeService _episodeService;
+        private readonly IEpisodeService _episodeService;
 
         // Constructor injection to get the EpisodeService instance
-        public EpisodeController(EpisodeService episodeService)
+        public EpisodeController(IEpisodeService episodeService)
         {
             _episodeService = episodeService;
         }
