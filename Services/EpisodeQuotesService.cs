@@ -6,10 +6,10 @@ namespace SeinfeldAPI.Services
 {
     public class EpisodeQuotesService : IEpisodeQuotesService
     {
-        private readonly EpisodeQuotesRepoistory _quotesRepo;
-        private readonly EpisodeRepoistory _episodeRepo;
+        private readonly IEpisodeQuotesRepository _quotesRepo;
+        private readonly IEpisodeRepository _episodeRepo;
 
-        public EpisodeQuotesService(EpisodeQuotesRepoistory quotesRepo, EpisodeRepoistory episodeRepo) 
+        public EpisodeQuotesService(IEpisodeQuotesRepository quotesRepo, IEpisodeRepository episodeRepo) 
         {
             _quotesRepo = quotesRepo;
             _episodeRepo = episodeRepo;
