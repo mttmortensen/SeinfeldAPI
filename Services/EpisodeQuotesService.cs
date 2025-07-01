@@ -1,4 +1,5 @@
-﻿using SeinfeldAPI.Repo;
+﻿using SeinfeldAPI.Models;
+using SeinfeldAPI.Repo;
 
 namespace SeinfeldAPI.Services
 {
@@ -11,6 +12,24 @@ namespace SeinfeldAPI.Services
         {
             _quotesRepo = quotesRepo;
             _episodeRepo = episodeRepo;
+        }
+
+        // Get all quotes from all episodes
+        public List<EpisodeQuotes> GetAllQuotes()
+        {
+            return _quotesRepo.GetAllQuotes();
+        }
+
+        // Get all quotes for a specific episode
+        public List<EpisodeQuotes> GetQuotesForEpisode(int episodeId)
+        {
+            return _quotesRepo.GetQuotesForEpisode(episodeId);
+        }
+
+        // Get a single quote by ID
+        public EpisodeQuotes? GetQuoteById(int id)
+        {
+            return _quotesRepo.GetQuoteById(id);
         }
     }
 }
