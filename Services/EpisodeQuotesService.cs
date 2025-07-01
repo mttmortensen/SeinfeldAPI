@@ -1,9 +1,10 @@
-﻿using SeinfeldAPI.Models;
+﻿using SeinfeldAPI.Interfaces;
+using SeinfeldAPI.Models;
 using SeinfeldAPI.Repo;
 
 namespace SeinfeldAPI.Services
 {
-    public class EpisodeQuotesService
+    public class EpisodeQuotesService : IEpisodeQuotesService
     {
         private readonly EpisodeQuotesRepoistory _quotesRepo;
         private readonly EpisodeRepoistory _episodeRepo;
