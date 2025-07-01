@@ -3,7 +3,7 @@ using SeinfeldAPI.Models;
 
 namespace SeinfeldAPI.Services
 {
-    public class EpisodeService
+    public class EpisodeService : IEpisodeService
     {
         private readonly IEpisodeRepository _episodeRepo;
 
