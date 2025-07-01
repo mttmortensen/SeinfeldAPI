@@ -58,5 +58,40 @@ namespace SeinfeldAPI.Controllers
             // Return the quote with 200 OK
             return Ok(quote);
         }
+
+        // Handles POST requests to add a new quote and will add to the correct episode 
+        // thanks to service layer
+        [HttpPost]
+        public ActionResult AddQuote([FromBody] EpisodeQuotes quote)
+        {
+            // Try to add the quote (only if episode exists)
+            bool success = _quotesService.AddQuote(quote);
+
+            // Return 400 if episode doesn't exist or add fails
+            if (!success)
+                return BadRequest("Quote could not be added. Make sure the episode exists.");
+
+            // Return 201 Created with location of new quote
+            return CreatedAtAction(nameof(GetQuoteById), new { id = quote.Id }, quote);
+        }
+
+        // Handles PUT requests to update a quote by ID
+        [HttpPut("{id}")]
+        public ActionResult UpdateQuote(int id, [FromBody] EpisodeQuotes quote)
+        {
+            // If the ID in URL doesn't match the one in body, reject it
+            if (id != quote.Id)
+                return BadRequest("ID in URL doesn't match ID in body.");
+
+            // Try to update the quote
+            bool success = _quotesService.UpdateQuote(quote);
+
+            // If update failed (e.g. quote doesn’t exist), return 404
+            if (!success)
+                return NotFound();
+
+            // Return 204 No Content to indicate successful update
+            return NoContent();
+        }
     }
 }
