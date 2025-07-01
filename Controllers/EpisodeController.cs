@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SeinfeldAPI.Services;
+using SeinfeldAPI.Models;
 
 namespace SeinfeldAPI.Controllers
 {
@@ -17,6 +18,32 @@ namespace SeinfeldAPI.Controllers
         public EpisodeController(EpisodeService episodeService)
         {
             _episodeService = episodeService;
+        }
+
+        // Handles GET requests to /api/epsiodes
+        [HttpGet]
+        public ActionResult<List<Episode>> GetAllEpisodes() 
+        {
+            // Fetches all episodes from the service
+            List<Episode> episodes = _episodeService.GetAllEpisodes();
+
+            // Return 200 OK with the list of episodes
+            return Ok(episodes);
+        }
+
+        // Handles GET requests to /api/episodes/{id}
+        [HttpGet("{id}")]
+        public ActionResult<Episode> GetEpisodeById(int id) 
+        {
+            // Try to get the episode by it's Id
+            Episode episode = _episodeService.GetEpisodeById(id);
+
+            // If no match, return 404
+            if (episode == null)
+                return NotFound();
+
+            // Otherwise return the episode with 200
+            return Ok(episode);
         }
     }
 }
