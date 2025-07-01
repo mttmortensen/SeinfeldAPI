@@ -31,5 +31,30 @@ namespace SeinfeldAPI.Services
         {
             return _quotesRepo.GetQuoteById(id);
         }
+
+        // Add a new quote (only if the episode exists)
+        public bool AddQuote(EpisodeQuotes quote)
+        {
+            var episodeExists = _episodeRepo.GetEpisodeById(quote.EpisodeId) != null;
+            if (!episodeExists)
+                return false;
+
+            _quotesRepo.AddQuote(quote);
+            return _quotesRepo.SaveChanges();
+        }
+
+        // Update an existing quote
+        public bool UpdateQuote(EpisodeQuotes quote)
+        {
+            _quotesRepo.UpdateQuote(quote);
+            return _quotesRepo.SaveChanges();
+        }
+
+        // Delete a quote by ID
+        public bool DeleteQuote(int id)
+        {
+            _quotesRepo.DeleteQuote(id);
+            return _quotesRepo.SaveChanges();
+        }
     }
 }
