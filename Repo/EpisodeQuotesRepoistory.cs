@@ -40,28 +40,32 @@ namespace SeinfeldAPI.Repo
                 .FirstOrDefault(q => q.Id == id);
         }
 
-
-        // ==== These haven't been made yet in _context
-        // ==== They're just inheriting the methods from DbContext Interface
-
         // Add a new quote (not saved yet)
-        public void AddQuote(EpisodeQuotes quotes) 
+        public bool AddQuote(EpisodeQuotes quotes) 
         {
             _context.EpisodeQuotes.Add(quotes);
+            return _context.SaveChanges() > 0;
         }
 
         // Mark a quote for update
-        public void UpdateQuote(EpisodeQuotes quote)
+        public bool UpdateQuote(EpisodeQuotes quote)
         {
             _context.EpisodeQuotes.Update(quote);
+            return _context.SaveChanges() > 0;
+
         }
 
         // Remove a quote by ID (if it exists)
-        public void DeleteQuote(int id)
+        public bool DeleteQuote(int id)
         {
             var quote = _context.EpisodeQuotes.Find(id);
             if (quote != null)
+            {
                 _context.EpisodeQuotes.Remove(quote);
+                return _context.SaveChanges() > 0;
+            }
+
+            return false;
         }
 
         // Saves all changes made so far (post/update/delete)

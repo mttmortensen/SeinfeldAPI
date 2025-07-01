@@ -32,29 +32,32 @@ namespace SeinfeldAPI.Repo
                 .FirstOrDefault();
         }
 
-
-        // ==== These haven't been made yet in _context
-        // ==== They're just inheriting the methods from DbContext Interface
-
         // Adds a new option to the database
-        public void AddEpisode(Episode episode) 
+        public bool AddEpisode(Episode episode) 
         {
             _context.Episodes.Add(episode);
+            return _context.SaveChanges() > 0;
         }
 
         // Marks an existing episode for update
-        public void UpdateEpisode(Episode episode) 
+        public bool UpdateEpisode(Episode episode) 
         {
             _context.Episodes.Update(episode);
+            return _context.SaveChanges() > 0;
         }
 
         // Finds and removes an episode by Id
-        public void DeleteEpisode(int id) 
+        public bool DeleteEpisode(int id) 
         {
             var episode = _context.Episodes.Find(id);
 
             if (episode != null)
+            {
                 _context.Episodes.Remove(episode);
+                return _context.SaveChanges() > 0;
+            }
+
+            return false;
         }
 
         // Saves all changes made so far (post/update/delete)
