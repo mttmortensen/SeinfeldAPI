@@ -17,6 +17,7 @@ namespace SeinfeldAPI
             builder.Services.AddScoped<IEpisodeRepository, EpisodeRepoistory>();
             builder.Services.AddScoped<IEpisodeQuotesRepository, EpisodeQuotesRepoistory>();
             builder.Services.AddScoped<IEpisodeService, EpisodeService>();
+            builder.Services.AddScoped<IEpisodeQuotesService, EpisodeQuotesService>();
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
