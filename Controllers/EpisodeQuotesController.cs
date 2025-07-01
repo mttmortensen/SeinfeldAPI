@@ -93,5 +93,20 @@ namespace SeinfeldAPI.Controllers
             // Return 204 No Content to indicate successful update
             return NoContent();
         }
+
+        // Handles DELETE requests to remove a quote by ID
+        [HttpDelete("{id}")]
+        public ActionResult DeleteQuote(int id)
+        {
+            // Try to delete the quote
+            var success = _quotesService.DeleteQuote(id);
+
+            // Return 404 if quote was not found
+            if (!success)
+                return NotFound();
+
+            // Return 204 No Content to confirm deletion
+            return NoContent();
+        }
     }
 }
