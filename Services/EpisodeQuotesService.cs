@@ -4,11 +4,13 @@ namespace SeinfeldAPI.Services
 {
     public class EpisodeQuotesService
     {
-        private readonly EpisodeQuotesRepoistory _eqrepo;
+        private readonly EpisodeQuotesRepoistory _quotesRepo;
+        private readonly EpisodeRepoistory _episodeRepo;
 
-        public EpisodeQuotesService(EpisodeQuotesRepoistory eqrepo) 
+        public EpisodeQuotesService(EpisodeQuotesRepoistory quotesRepo, EpisodeRepoistory episodeRepo) 
         {
-            _eqrepo = eqrepo;
+            _quotesRepo = quotesRepo;
+            _episodeRepo = episodeRepo;
         }
     }
 }
