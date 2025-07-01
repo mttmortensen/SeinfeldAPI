@@ -23,5 +23,26 @@ namespace SeinfeldAPI.Services
         {
             return _episodeRepo.GetEpisodeById(id);
         }
+
+        // Add a new episode
+        public bool AddEpisode(Episode episode)
+        {
+            _episodeRepo.AddEpisode(episode);
+            return _episodeRepo.SaveChanges();
+        }
+
+        // Update an existing episode
+        public bool UpdateEpisode(Episode episode)
+        {
+            _episodeRepo.UpdateEpisode(episode);
+            return _episodeRepo.SaveChanges();
+        }
+
+        // Delete an episode by ID
+        public bool DeleteEpisode(int id)
+        {
+            _episodeRepo.DeleteEpisode(id);
+            return _episodeRepo.SaveChanges();
+        }
     }
 }
