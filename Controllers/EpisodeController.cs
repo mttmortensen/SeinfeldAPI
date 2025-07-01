@@ -22,7 +22,7 @@ namespace SeinfeldAPI.Controllers
 
         // Handles GET requests to /api/epsiodes
         [HttpGet]
-        public ActionResult<List<Episode>> GetAllEpisodes() 
+        public ActionResult<List<Episode>> GetAllEpisodes()
         {
             // Fetches all episodes from the service
             List<Episode> episodes = _episodeService.GetAllEpisodes();
@@ -33,7 +33,7 @@ namespace SeinfeldAPI.Controllers
 
         // Handles GET requests to /api/episodes/{id}
         [HttpGet("{id}")]
-        public ActionResult<Episode> GetEpisodeById(int id) 
+        public ActionResult<Episode> GetEpisodeById(int id)
         {
             // Try to get the episode by it's Id
             Episode episode = _episodeService.GetEpisodeById(id);
@@ -44,6 +44,40 @@ namespace SeinfeldAPI.Controllers
 
             // Otherwise return the episode with 200
             return Ok(episode);
+        }
+
+        // Handles POST requests to /api/episodes for a new episode
+        [HttpPost]
+        public ActionResult AddEpisode([FromBody] Episode episode)
+        {
+            // Try to add the episode to the db
+            bool success = _episodeService.AddEpisode(episode);
+
+            // Return 400 if episode couldn't be added 
+            if (!success)
+                return BadRequest("Episode could not be added");
+
+            // Return 201 Created with location header 
+            return CreatedAtAction(nameof(GetEpisodeById), new { id = episode.Id }, episode);
+        }
+
+        // Handles PUT request to to update an existing episode
+        [HttpPut("{id}")]
+        public ActionResult UpdateEpisode(int id, [FromBody] Episode episode) 
+        {
+            // Return 400 if Ids don't match
+            if (id != episode.Id)
+                return BadRequest("Id in URL doesn't match Id in body");
+
+            // Try to update the episode 
+            bool success = _episodeService.UpdateEpisode(episode);
+
+            // If update failed return 404
+            if (!success)
+                return NotFound();
+
+            // Return 204 No Content to indicate sucess with no return body
+            return NoContent();
         }
     }
 }
