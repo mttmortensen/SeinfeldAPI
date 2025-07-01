@@ -79,5 +79,20 @@ namespace SeinfeldAPI.Controllers
             // Return 204 No Content to indicate sucess with no return body
             return NoContent();
         }
+
+        // Handles DELETE requests to remove an episode
+        [HttpDelete("{id}")]
+        public ActionResult DeleteEpisode(int id)
+        {
+            // Try to delete the episode
+            var success = _episodeService.DeleteEpisode(id);
+
+            // Return 404 if it didn’t exist
+            if (!success)
+                return NotFound();
+
+            // Return 204 No Content to confirm deletion
+            return NoContent();
+        }
     }
 }
