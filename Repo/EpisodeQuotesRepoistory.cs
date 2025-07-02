@@ -30,7 +30,10 @@ namespace SeinfeldAPI.Repo
         public List<EpisodeQuotes> GetQuotesForEpisode(int episodeId) 
         {
             return _context.EpisodeQuotes
+                // I still need to bring in the specific episode 
+                // that's why .Where() is still here
                 .Where(q => q.EpisodeId == episodeId)
+                .Include(q => q.Episode)
                 .ToList();
         }
 
