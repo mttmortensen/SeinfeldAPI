@@ -23,10 +23,10 @@ namespace SeinfeldAPI.Controllers
         // Handles GET requests to /api/episodequotes
         // This brings in all quotes from the db 
         [HttpGet]
-        public ActionResult<List<EpisodeQuotes>> GetAllQuotes()
+        public ActionResult<List<EpisodeQuoteDto>> GetAllQuotes()
         {
             // Get all quotes in the system
-            List<EpisodeQuotes> quotes = _quotesService.GetAllQuotes();
+            List<EpisodeQuoteDto> quotes = _quotesService.GetAllQuotes();
 
             // Return them with 200 OK
             return Ok(quotes);
