@@ -24,7 +24,7 @@ namespace SeinfeldAPI.Services
                     Season = e.Season,
                     EpisodeNumber = e.EpisodeNumber,
                     AirDate = e.AirDate,
-                    Quotes = e.Quotes.Select(q => new EpisodeQuoteDto
+                    Quotes = e.Quotes.Select(q => new EpisodeQuoteFlatDto
                     {
                         Id = q.Id,
                         Quote = q.Quote,
@@ -50,7 +50,7 @@ namespace SeinfeldAPI.Services
                 Season = episode.Season,
                 EpisodeNumber = episode.EpisodeNumber,
                 AirDate = episode.AirDate,
-                Quotes = episode.Quotes.Select(q => new EpisodeQuoteDto
+                Quotes = episode.Quotes.Select(q => new EpisodeQuoteFlatDto
                 {
                     Id = q.Id,
                     Quote = q.Quote,
