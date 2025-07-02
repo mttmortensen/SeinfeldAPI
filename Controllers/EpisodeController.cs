@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SeinfeldAPI.Interfaces;
-using SeinfeldAPI.Models;
+using SeinfeldAPI.Models.DTOs;
 
 namespace SeinfeldAPI.Controllers
 {
@@ -22,10 +22,10 @@ namespace SeinfeldAPI.Controllers
 
         // Handles GET requests to /api/epsiodes
         [HttpGet]
-        public ActionResult<List<Episode>> GetAllEpisodes()
+        public ActionResult<List<EpisodeDto>> GetAllEpisodes()
         {
             // Fetches all episodes from the service
-            List<Episode> episodes = _episodeService.GetAllEpisodes();
+            List<EpisodeDto> episodes = _episodeService.GetAllEpisodes();
 
             // Return 200 OK with the list of episodes
             return Ok(episodes);
@@ -33,10 +33,10 @@ namespace SeinfeldAPI.Controllers
 
         // Handles GET requests to /api/episodes/{id}
         [HttpGet("{id}")]
-        public ActionResult<Episode> GetEpisodeById(int id)
+        public ActionResult<EpisodeDto> GetEpisodeById(int id)
         {
             // Try to get the episode by it's Id
-            Episode episode = _episodeService.GetEpisodeById(id);
+            EpisodeDto episode = _episodeService.GetEpisodeById(id);
 
             // If no match, return 404
             if (episode == null)
@@ -48,7 +48,7 @@ namespace SeinfeldAPI.Controllers
 
         // Handles POST requests to /api/episodes for a new episode
         [HttpPost]
-        public ActionResult AddEpisode([FromBody] Episode episode)
+        public ActionResult AddEpisode([FromBody] EpisodeDto episode)
         {
             // Try to add the episode to the db
             bool success = _episodeService.AddEpisode(episode);
@@ -63,7 +63,7 @@ namespace SeinfeldAPI.Controllers
 
         // Handles PUT request to to update an existing episode
         [HttpPut("{id}")]
-        public ActionResult UpdateEpisode(int id, [FromBody] Episode episode) 
+        public ActionResult UpdateEpisode(int id, [FromBody] EpisodeDto episode) 
         {
             // Return 400 if Ids don't match
             if (id != episode.Id)
