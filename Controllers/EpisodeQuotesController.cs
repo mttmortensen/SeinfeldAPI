@@ -62,7 +62,7 @@ namespace SeinfeldAPI.Controllers
         // Handles POST requests to add a new quote and will add to the correct episode 
         // thanks to service layer
         [HttpPost]
-        public ActionResult AddQuote([FromBody] EpisodeQuotes quote)
+        public ActionResult AddQuote([FromBody] EpisodeQuoteDto quote)
         {
             // Try to add the quote (only if episode exists)
             bool success = _quotesService.AddQuote(quote);
