@@ -20,7 +20,9 @@ namespace SeinfeldAPI.Repo
         public List<EpisodeQuotes> GetAllQuotes()
         {
             return _context.EpisodeQuotes
-                .Include(q => q.Episode) // This will bring in all the episode date with it, might wanna trim this down later
+                // This will bring in all the episode date with it
+                // We will use the EQ DTO object to trim this down
+                .Include(q => q.Episode) 
                 .ToList();
         }
 
