@@ -28,7 +28,8 @@ namespace SeinfeldAPI.Services
                     {
                         Id = q.Id,
                         Quote = q.Quote,
-                        Character = q.Character
+                        Character = q.Character,
+                        EpisodeId = e.Id
                     }).ToList()
                 })
                 .ToList();
@@ -42,7 +43,7 @@ namespace SeinfeldAPI.Services
             if (episode == null)
                 return null;
 
-            return new EpisodeDto 
+            return new EpisodeDto
             {
                 Id = episode.Id,
                 Title = episode.Title,
@@ -53,7 +54,8 @@ namespace SeinfeldAPI.Services
                 {
                     Id = q.Id,
                     Quote = q.Quote,
-                    Character = q.Character
+                    Character = q.Character,
+                    EpisodeId = episode.Id
                 }).ToList()
             };
         }
@@ -75,8 +77,7 @@ namespace SeinfeldAPI.Services
                 Quotes = episodeDto.Quotes?.Select(q => new EpisodeQuotes 
                 {
                     Quote = q.Quote,
-                    Character = q.Character,
-                    EpisodeId = episodeDto.Id
+                    Character = q.Character
                 }).ToList() ?? new List<EpisodeQuotes>() // This is handling the null value which we will wanna target better soon
 
             };
