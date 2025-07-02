@@ -18,7 +18,17 @@ namespace SeinfeldAPI
             builder.Services.AddScoped<IEpisodeQuotesRepository, EpisodeQuotesRepoistory>();
             builder.Services.AddScoped<IEpisodeService, EpisodeService>();
             builder.Services.AddScoped<IEpisodeQuotesService, EpisodeQuotesService>();
-            builder.Services.AddControllers();
+
+
+            /*
+             * When you return a list of Episodes with their quotes 
+             * which each have an episode, which has quotes, 
+             * it becomes a never-ending cycle, which System.Text.Json can’t handle by default.
+             */
+            builder.Services.AddControllers()
+                .AddJsonOptions(x =>
+                    x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve);
+
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
