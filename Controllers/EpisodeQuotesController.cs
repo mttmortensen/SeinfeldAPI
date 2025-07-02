@@ -77,7 +77,7 @@ namespace SeinfeldAPI.Controllers
 
         // Handles PUT requests to update a quote by ID
         [HttpPut("{id}")]
-        public ActionResult UpdateQuote(int id, [FromBody] EpisodeQuotes quote)
+        public ActionResult UpdateQuote(int id, [FromBody] EpisodeQuoteDto quote)
         {
             // If the ID in URL doesn't match the one in body, reject it
             if (id != quote.Id)

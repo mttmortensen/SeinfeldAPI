@@ -8,7 +8,7 @@ namespace SeinfeldAPI.Interfaces
         List<EpisodeQuoteDto> GetQuotesForEpisode(int episodeId);
         EpisodeQuoteDto? GetQuoteById(int id);
         bool AddQuote(EpisodeQuoteDto quote);
-        bool UpdateQuote(EpisodeQuotes quote);
+        bool UpdateQuote(EpisodeQuoteDto quote);
         bool DeleteQuote(int id);
     }
 }

@@ -69,6 +69,7 @@ namespace SeinfeldAPI.Services
         // Add a new quote (only if the episode exists)
         public bool AddQuote(EpisodeQuoteDto quoteDto)
         {
+            // EQ is still needed for _quoteRepo to use normally
             EpisodeQuotes quote = new EpisodeQuotes
             {
                 Quote = quoteDto.Quote,
@@ -85,9 +86,20 @@ namespace SeinfeldAPI.Services
         }
 
         // Update an existing quote
-        public bool UpdateQuote(EpisodeQuotes quote)
+        public bool UpdateQuote(EpisodeQuoteDto quoteDto)
         {
-            _quotesRepo.UpdateQuote(quote);
+            // Checks to see if the quoteDto.Id exists 
+            EpisodeQuotes exisiting = _quotesRepo.GetQuoteById(quoteDto.Id);
+            if (exisiting == null)
+                return false;
+
+            // Not many props to update
+            // So i'm fine with doing it manually here
+            exisiting.Quote = quoteDto.Quote;
+            exisiting.Character = quoteDto.Character;
+            exisiting.EpisodeId = quoteDto.EpisodeId;
+
+            _quotesRepo.UpdateQuote(exisiting);
             return _quotesRepo.SaveChanges();
         }
 
