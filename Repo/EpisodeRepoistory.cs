@@ -29,7 +29,7 @@ namespace SeinfeldAPI.Repo
         {
             return _context.Episodes
                 .Include(e => e.Quotes)
-                .FirstOrDefault();
+                .FirstOrDefault(e => e.Id == id);
         }
 
         // Adds a new option to the database
