@@ -1,5 +1,6 @@
 ﻿using SeinfeldAPI.Interfaces;
 using SeinfeldAPI.Models;
+using SeinfeldAPI.Models.DTOs;
 using SeinfeldAPI.Repo;
 
 namespace SeinfeldAPI.Services

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SeinfeldAPI.Models;
 using SeinfeldAPI.Interfaces;
+using SeinfeldAPI.Models.DTOs;
 
 namespace SeinfeldAPI.Controllers
 {

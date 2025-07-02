@@ -1,4 +1,4 @@
-﻿namespace SeinfeldAPI.Models
+﻿namespace SeinfeldAPI.Models.DTOs
 {
     public class EpisodeQuoteDto
     {

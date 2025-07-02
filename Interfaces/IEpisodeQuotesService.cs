@@ -1,4 +1,4 @@
-﻿using SeinfeldAPI.Models;
+﻿using SeinfeldAPI.Models.DTOs;
 
 namespace SeinfeldAPI.Interfaces
 {
