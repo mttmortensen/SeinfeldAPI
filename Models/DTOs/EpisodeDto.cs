@@ -9,6 +9,6 @@
         public DateTime AirDate { get; set; }
 
         // Including now the simplifed EpisodeQuotes data
-        public List<EpisodeQuoteDto> Quotes { get; set; }
+        public List<EpisodeQuoteFlatDto> Quotes { get; set; }
     }
 }
