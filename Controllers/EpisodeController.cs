@@ -48,17 +48,14 @@ namespace SeinfeldAPI.Controllers
 
         // Handles POST requests to /api/episodes for a new episode
         [HttpPost]
-        public ActionResult AddEpisode([FromBody] EpisodeDto episode)
+        public ActionResult AddEpisode([FromBody] EpisodeDto episodeDto)
         {
-            // Try to add the episode to the db
-            bool success = _episodeService.AddEpisode(episode);
+            var created = _episodeService.AddEpisode(episodeDto);
 
-            // Return 400 if episode couldn't be added 
-            if (!success)
+            if (created == null)
                 return BadRequest("Episode could not be added");
 
-            // Return 201 Created with location header 
-            return CreatedAtAction(nameof(GetEpisodeById), new { id = episode.Id }, episode);
+            return CreatedAtAction(nameof(GetEpisodeById), new { id = created.Id }, created);
         }
 
         // Handles PUT request to to update an existing episode

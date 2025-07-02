@@ -61,30 +61,46 @@ namespace SeinfeldAPI.Services
         }
 
         // Add a new episode
-        public bool AddEpisode(EpisodeDto episodeDto)
+        public EpisodeDto? AddEpisode(EpisodeDto episodeDto)
         {
-
-            // Raw Episode is still needed for the repo
-            Episode episode = new Episode 
+            Episode episode = new Episode
             {
-                Id = episodeDto.Id,
                 Title = episodeDto.Title,
                 Season = episodeDto.Season,
                 EpisodeNumber = episodeDto.EpisodeNumber,
                 AirDate = episodeDto.AirDate,
-                // Since Quotes was another raw C# class 
-                // We're needing to convert it from Dto to Raw for EQs
-                Quotes = episodeDto.Quotes?.Select(q => new EpisodeQuotes 
+                Quotes = episodeDto.Quotes?.Select(q => new EpisodeQuotes
                 {
                     Quote = q.Quote,
                     Character = q.Character
-                }).ToList() ?? new List<EpisodeQuotes>() // This is handling the null value which we will wanna target better soon
-
+                }).ToList() ?? new List<EpisodeQuotes>()
             };
 
+            foreach (var quote in episode.Quotes)
+                quote.Episode = episode;
+
             _episodeRepo.AddEpisode(episode);
-            return _episodeRepo.SaveChanges();
+            bool success = _episodeRepo.SaveChanges();
+
+            if (!success)
+                return null;
+
+            // Map to DTO here and return
+            return new EpisodeDto
+            {
+                Title = episode.Title,
+                Season = episode.Season,
+                EpisodeNumber = episode.EpisodeNumber,
+                AirDate = episode.AirDate,
+                Quotes = episode.Quotes.Select(q => new EpisodeQuoteFlatDto
+                {
+                    Quote = q.Quote,
+                    Character = q.Character
+                }).ToList()
+            };
         }
+
+
 
         // Update an existing episode
         public bool UpdateEpisode(EpisodeDto episodeDto)
