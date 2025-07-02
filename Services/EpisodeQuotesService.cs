@@ -32,15 +32,38 @@ namespace SeinfeldAPI.Services
         }
 
         // Get all quotes for a specific episode
-        public List<EpisodeQuotes> GetQuotesForEpisode(int episodeId)
+        public List<EpisodeQuoteDto> GetQuotesForEpisode(int episodeId)
         {
-            return _quotesRepo.GetQuotesForEpisode(episodeId);
+            return _quotesRepo.GetQuotesForEpisode(episodeId)
+                .Select(q => new EpisodeQuoteDto 
+                {
+                    Id = q.Id,
+                    Quote = q.Quote,
+                    Character = q.Character,
+                    EpisodeId = q.EpisodeId,
+                    EpisodeTitle = q.Episode.Title,
+                    EpisodeSeason = q.Episode.Season
+                })
+                .ToList();
         }
 
         // Get a single quote by ID
-        public EpisodeQuotes? GetQuoteById(int id)
+        public EpisodeQuoteDto? GetQuoteById(int id)
         {
-            return _quotesRepo.GetQuoteById(id);
+            EpisodeQuotes quote = _quotesRepo.GetQuoteById(id);
+
+            if (quote == null || quote.Episode == null)
+                return null;
+
+            return new EpisodeQuoteDto
+            {
+                Id = quote.Id,
+                Quote = quote.Quote,
+                Character = quote.Character,
+                EpisodeId = quote.EpisodeId,
+                EpisodeTitle = quote.Episode.Title,
+                EpisodeSeason = quote.Episode.Season
+            };
         }
 
         // Add a new quote (only if the episode exists)
