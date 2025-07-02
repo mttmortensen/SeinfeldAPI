@@ -35,10 +35,10 @@ namespace SeinfeldAPI.Controllers
         // Handles GET requests to /api/episodequotes/episode/{episodeId}
         // This brings in all the quotes for a specific episode
         [HttpGet("episode/{episodeId}")]
-        public ActionResult<List<EpisodeQuotes>> GetQuotesForEpisode(int episodeId)
+        public ActionResult<List<EpisodeQuoteDto>> GetQuotesForEpisode(int episodeId)
         {
             // Get all quotes for a specific episode
-            List<EpisodeQuotes> quotes = _quotesService.GetQuotesForEpisode(episodeId);
+            List<EpisodeQuoteDto> quotes = _quotesService.GetQuotesForEpisode(episodeId);
 
             // Return them with 200 OK
             return Ok(quotes);
@@ -46,10 +46,10 @@ namespace SeinfeldAPI.Controllers
 
         // Handles GET requests to /api/episodequotes/{id}
         [HttpGet("{id}")]
-        public ActionResult<EpisodeQuotes> GetQuoteById(int id)
+        public ActionResult<EpisodeQuoteDto> GetQuoteById(int id)
         {
             // Try to get the quote with this ID
-            EpisodeQuotes quote = _quotesService.GetQuoteById(id);
+            EpisodeQuoteDto quote = _quotesService.GetQuoteById(id);
 
             // If not found, return 404
             if (quote == null)
