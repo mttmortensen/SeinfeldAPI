@@ -67,8 +67,15 @@ namespace SeinfeldAPI.Services
         }
 
         // Add a new quote (only if the episode exists)
-        public bool AddQuote(EpisodeQuotes quote)
+        public bool AddQuote(EpisodeQuoteDto quoteDto)
         {
+            EpisodeQuotes quote = new EpisodeQuotes
+            {
+                Quote = quoteDto.Quote,
+                Character = quoteDto.Character,
+                EpisodeId = quoteDto.EpisodeId
+            };
+
             var episodeExists = _episodeRepo.GetEpisodeById(quote.EpisodeId) != null;
             if (!episodeExists)
                 return false;
