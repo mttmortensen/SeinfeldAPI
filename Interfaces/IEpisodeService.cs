@@ -1,13 +1,13 @@
-﻿using SeinfeldAPI.Models;
+﻿using SeinfeldAPI.Models.DTOs;
 
 namespace SeinfeldAPI.Interfaces
 {
     public interface IEpisodeService
     {
-        List<Episode> GetAllEpisodes();
-        Episode? GetEpisodeById(int id);
-        bool AddEpisode(Episode episode);
-        bool UpdateEpisode(Episode episode);
+        List<EpisodeDto> GetAllEpisodes();
+        EpisodeDto? GetEpisodeById(int id);
+        bool AddEpisode(EpisodeDto episode);
+        bool UpdateEpisode(EpisodeDto episode);
         bool DeleteEpisode(int id);
     }
 }
