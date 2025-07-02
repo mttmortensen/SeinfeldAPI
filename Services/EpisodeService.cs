@@ -1,5 +1,6 @@
 ﻿using SeinfeldAPI.Interfaces;
 using SeinfeldAPI.Models;
+using SeinfeldAPI.Models.DTOs;
 
 namespace SeinfeldAPI.Services
 {
@@ -13,9 +14,24 @@ namespace SeinfeldAPI.Services
         }
 
         // Get all episodes
-        public List<Episode> GetAllEpisodes()
+        public List<EpisodeDto> GetAllEpisodes()
         {
-            return _episodeRepo.GetAllEpisodes();
+            return _episodeRepo.GetAllEpisodes()
+                .Select(e => new EpisodeDto 
+                {
+                    Id = e.Id,
+                    Title = e.Title,
+                    Season = e.Season,
+                    EpisodeNumber = e.EpisodeNumber,
+                    AirDate = e.AirDate,
+                    Quotes = e.Quotes.Select(q => new EpisodeQuoteDto
+                    {
+                        Id = q.Id,
+                        Quote = q.Quote,
+                        Character = q.Character
+                    }).ToList()
+                })
+                .ToList();
         }
 
         // Get a specific episode by ID
