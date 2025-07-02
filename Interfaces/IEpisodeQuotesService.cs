@@ -4,7 +4,7 @@ namespace SeinfeldAPI.Interfaces
 {
     public interface IEpisodeQuotesService
     {
-        List<EpisodeQuotes> GetAllQuotes();
+        List<EpisodeQuoteDto> GetAllQuotes();
         List<EpisodeQuotes> GetQuotesForEpisode(int episodeId);
         EpisodeQuotes? GetQuoteById(int id);
         bool AddQuote(EpisodeQuotes quote);

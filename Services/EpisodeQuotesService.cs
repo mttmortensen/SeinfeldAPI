@@ -16,9 +16,19 @@ namespace SeinfeldAPI.Services
         }
 
         // Get all quotes from all episodes
-        public List<EpisodeQuotes> GetAllQuotes()
+        public List<EpisodeQuoteDto> GetAllQuotes()
         {
-            return _quotesRepo.GetAllQuotes();
+            return _quotesRepo.GetAllQuotes()
+                .Select(q => new EpisodeQuoteDto 
+                {
+                    Id = q.Id,
+                    Quote = q.Quote,
+                    Character = q.Character,
+                    EpisodeId = q.EpisodeId,
+                    EpisodeTitle = q.Episode.Title,
+                    EpisodeSeason = q.Episode.Season
+                })
+                .ToList();
         }
 
         // Get all quotes for a specific episode
