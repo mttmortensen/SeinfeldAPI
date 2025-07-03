@@ -7,10 +7,12 @@ namespace SeinfeldAPI.Services
     public class EpisodeService : IEpisodeService
     {
         private readonly IEpisodeRepository _episodeRepo;
+        private readonly IEpisodeQuotesService _eqService;
 
-        public EpisodeService(IEpisodeRepository episodeRepo)
+        public EpisodeService(IEpisodeRepository episodeRepo, IEpisodeQuotesService eqService)
         {
             _episodeRepo = episodeRepo;
+            _eqService = eqService;
         }
 
         // Get all episodes
@@ -103,19 +105,28 @@ namespace SeinfeldAPI.Services
 
 
         // Update an existing episode
-        public bool UpdateEpisode(EpisodeDto episodeDto)
+        public bool UpdateEpisode(EpisodeFlatDto episodeFlatDto)
         {
             // Checks to see if the Raw Episode exists 
             // With the EpisdoeDTO Id
-            Episode exisiting = _episodeRepo.GetEpisodeById(episodeDto.Id);
+            Episode exisiting = _episodeRepo.GetEpisodeById(episodeFlatDto.Id);
             if (exisiting == null)
                 return false;
 
             // I'm going to manually update them here 
-            exisiting.Title = episodeDto.Title;
-            exisiting.Season = episodeDto.Season;
-            exisiting.EpisodeNumber = episodeDto.EpisodeNumber;
-            exisiting.AirDate = episodeDto.AirDate;
+            // By doing these conditions, I can allow for empty values to be allowed without breaking the app 
+            // Doing empty values will indicate nothing needed to be changed for it.
+            if (!string.IsNullOrWhiteSpace(episodeFlatDto.Title))
+                exisiting.Title = episodeFlatDto.Title;
+
+            if (!string.IsNullOrWhiteSpace(episodeFlatDto.Season))
+                exisiting.Season = episodeFlatDto.Season;
+
+            if (!string.IsNullOrWhiteSpace(episodeFlatDto.EpisodeNumber))
+                exisiting.EpisodeNumber = episodeFlatDto.EpisodeNumber;
+
+            if (episodeFlatDto.AirDate.HasValue)
+                exisiting.AirDate = episodeFlatDto.AirDate.Value;
 
             _episodeRepo.UpdateEpisode(exisiting);
             return _episodeRepo.SaveChanges();
