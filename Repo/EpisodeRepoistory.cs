@@ -63,8 +63,10 @@ namespace SeinfeldAPI.Repo
         // Saves all changes made so far (post/update/delete)
         public bool SaveChanges() 
         {
-            //returns true if something changed
-            return _context.SaveChanges() > 0; 
+            // Will throw if anything actually fails
+            // If do this as part of the condition then service thinks nothing has been added
+            _context.SaveChanges();
+            return true; 
         }
     }
 }
