@@ -60,7 +60,7 @@ namespace SeinfeldAPI.Controllers
 
         // Handles PUT request to to update an existing episode
         [HttpPut("{id}")]
-        public ActionResult UpdateEpisode(int id, [FromBody] EpisodeDto episode) 
+        public ActionResult UpdateEpisode(int id, [FromBody] EpisodeFlatDto episode) 
         {
             // Return 400 if Ids don't match
             if (id != episode.Id)
