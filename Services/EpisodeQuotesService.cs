@@ -110,5 +110,16 @@ namespace SeinfeldAPI.Services
             _quotesRepo.DeleteQuote(id);
             return _quotesRepo.SaveChanges();
         }
+
+        // Resolves EpisodeId from either direct Id or from Title + Season
+        private int? ResolveEpisodeId(EpisodeQuoteDto dto) 
+        {
+            // Case 1: EpisodeId is provided directly
+
+            // Case 2: Try to resolve by title and season
+
+            // Not enough info to resolve
+            return null;
+        }
     }
 }
