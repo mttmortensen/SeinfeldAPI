@@ -115,8 +115,20 @@ namespace SeinfeldAPI.Services
         private int? ResolveEpisodeId(EpisodeQuoteDto dto) 
         {
             // Case 1: EpisodeId is provided directly
+            if (dto.EpisodeId.HasValue)
+                return dto.EpisodeId.Value;
 
             // Case 2: Try to resolve by title and season
+            if (!string.IsNullOrWhiteSpace(dto.EpisodeTitle) &&
+                !string.IsNullOrWhiteSpace(dto.EpisodeSeason))
+            {
+                Episode match = _episodeRepo.GetAllEpisodes()
+                    .FirstOrDefault(e =>
+                        e.Title.Equals(dto.EpisodeTitle, StringComparison.OrdinalIgnoreCase) &&
+                        e.Season.Equals(dto.EpisodeSeason, StringComparison.OrdinalIgnoreCase));
+
+                return match?.Id;
+            }
 
             // Not enough info to resolve
             return null;
