@@ -77,7 +77,10 @@ namespace SeinfeldAPI.Repo
 
         public bool SaveChanges()
         {
-            return _context.SaveChanges() > 0;
+            // Will throw if anything actually fails
+            // If do this as part of the condition then service thinks nothing has been added
+            _context.SaveChanges();
+            return true;
         }
     }
 
