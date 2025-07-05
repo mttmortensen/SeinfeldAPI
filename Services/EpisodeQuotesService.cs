@@ -70,17 +70,16 @@ namespace SeinfeldAPI.Services
         // Add a new quote (only if the episode exists)
         public bool AddQuote(EpisodeQuoteDto quoteDto)
         {
-            // EQ is still needed for _quoteRepo to use normally
-            EpisodeQuotes quote = new EpisodeQuotes
+            int? episodeId = ResolveEpisodeId(quoteDto);
+            if (episodeId == null)
+                return false;
+
+            var quote = new EpisodeQuotes
             {
                 Quote = quoteDto.Quote,
                 Character = quoteDto.Character,
-                EpisodeId = quoteDto.EpisodeId
+                EpisodeId = episodeId.Value
             };
-
-            var episodeExists = _episodeRepo.GetEpisodeById(quote.EpisodeId) != null;
-            if (!episodeExists)
-                return false;
 
             _quotesRepo.AddQuote(quote);
             return _quotesRepo.SaveChanges();
@@ -89,18 +88,19 @@ namespace SeinfeldAPI.Services
         // Update an existing quote
         public bool UpdateQuote(EpisodeQuoteDto quoteDto)
         {
-            // Checks to see if the quoteDto.Id exists 
-            EpisodeQuotes exisiting = _quotesRepo.GetQuoteById(quoteDto.Id);
-            if (exisiting == null)
+            EpisodeQuotes existing = _quotesRepo.GetQuoteById(quoteDto.Id);
+            if (existing == null)
                 return false;
 
-            // Not many props to update
-            // So i'm fine with doing it manually here
-            exisiting.Quote = quoteDto.Quote;
-            exisiting.Character = quoteDto.Character;
-            exisiting.EpisodeId = quoteDto.EpisodeId;
+            int? episodeId = ResolveEpisodeId(quoteDto);
+            if (episodeId == null)
+                return false;
 
-            _quotesRepo.UpdateQuote(exisiting);
+            existing.Quote = quoteDto.Quote;
+            existing.Character = quoteDto.Character;
+            existing.EpisodeId = episodeId.Value;
+
+            _quotesRepo.UpdateQuote(existing);
             return _quotesRepo.SaveChanges();
         }
 
