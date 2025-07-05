@@ -108,7 +108,7 @@ namespace SeinfeldAPI.Services
         public bool UpdateEpisode(EpisodeFlatDto episodeFlatDto)
         {
             // Checks to see if the Raw Episode exists 
-            // With the EpisdoeDTO Id
+            // With the EpisdoeFlatDTO Id
             Episode exisiting = _episodeRepo.GetEpisodeById(episodeFlatDto.Id);
             if (exisiting == null)
                 return false;
