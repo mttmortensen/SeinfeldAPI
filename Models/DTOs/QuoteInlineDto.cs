@@ -1,4 +1,6 @@
-﻿namespace SeinfeldAPI.Models.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SeinfeldAPI.Models.DTOs
 {
     /*
      * GET /api/episodes
@@ -17,8 +19,15 @@
     public class QuoteInlineDto
     {
         public int Id { get; set; }
+
+        [Required]
+        [StringLength(300, MinimumLength = 1)]
         public string Quote { get; set; }
+
+        [Required]
+        [StringLength(100)]
         public string Character { get; set; }
+
         public int EpisodeId { get; set; }
     }
 }

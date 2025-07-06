@@ -1,4 +1,6 @@
-﻿namespace SeinfeldAPI.Models.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SeinfeldAPI.Models.DTOs
 {
     /*
      * This Dto is used for any GET or POST request logic 
@@ -9,10 +11,22 @@
      */
     public class EpisodeWithQuotesDto
     {
+
         public int Id { get; set; }
+
+        [Required]
+        [StringLength(100)]
         public string Title { get; set; }
+
+        [Required]
+        [StringLength(20)]
         public string Season { get; set; }
+
+        [Required]
+        [StringLength(100)]
         public string EpisodeNumber { get; set; }
+
+        [Required]
         public DateTime AirDate { get; set; }
 
         // Including now the simplifed EpisodeQuotes data
