@@ -23,10 +23,10 @@ namespace SeinfeldAPI.Controllers
         // Handles GET requests to /api/episodequotes
         // This brings in all quotes from the db 
         [HttpGet]
-        public ActionResult<List<QuoteCreateOrUpdateDto>> GetAllQuotes()
+        public ActionResult<List<QuoteCreateDto>> GetAllQuotes()
         {
             // Get all quotes in the system
-            List<QuoteCreateOrUpdateDto> quotes = _quotesService.GetAllQuotes();
+            List<QuoteCreateDto> quotes = _quotesService.GetAllQuotes();
 
             // Return them with 200 OK
             return Ok(quotes);
@@ -35,10 +35,10 @@ namespace SeinfeldAPI.Controllers
         // Handles GET requests to /api/episodequotes/episode/{episodeId}
         // This brings in all the quotes for a specific episode
         [HttpGet("episode/{episodeId}")]
-        public ActionResult<List<QuoteCreateOrUpdateDto>> GetQuotesForEpisode(int episodeId)
+        public ActionResult<List<QuoteCreateDto>> GetQuotesForEpisode(int episodeId)
         {
             // Get all quotes for a specific episode
-            List<QuoteCreateOrUpdateDto> quotes = _quotesService.GetQuotesForEpisode(episodeId);
+            List<QuoteCreateDto> quotes = _quotesService.GetQuotesForEpisode(episodeId);
 
             // Return them with 200 OK
             return Ok(quotes);
@@ -46,10 +46,10 @@ namespace SeinfeldAPI.Controllers
 
         // Handles GET requests to /api/episodequotes/{id}
         [HttpGet("{id}")]
-        public ActionResult<QuoteCreateOrUpdateDto> GetQuoteById(int id)
+        public ActionResult<QuoteCreateDto> GetQuoteById(int id)
         {
             // Try to get the quote with this ID
-            QuoteCreateOrUpdateDto quote = _quotesService.GetQuoteById(id);
+            QuoteCreateDto quote = _quotesService.GetQuoteById(id);
 
             // If not found, return 404
             if (quote == null)
@@ -62,7 +62,7 @@ namespace SeinfeldAPI.Controllers
         // Handles POST requests to add a new quote and will add to the correct episode 
         // thanks to service layer
         [HttpPost]
-        public ActionResult AddQuote([FromBody] QuoteCreateOrUpdateDto quote)
+        public ActionResult AddQuote([FromBody] QuoteCreateDto quote)
         {
             // Try to add the quote (only if episode exists)
             bool success = _quotesService.AddQuote(quote);
@@ -77,7 +77,7 @@ namespace SeinfeldAPI.Controllers
 
         // Handles PUT requests to update a quote by ID
         [HttpPut("{id}")]
-        public ActionResult UpdateQuote(int id, [FromBody] QuoteCreateOrUpdateDto quote)
+        public ActionResult UpdateQuote(int id, [FromBody] QuoteCreateDto quote)
         {
             // If the ID in URL doesn't match the one in body, reject it
             if (id != quote.Id)
