@@ -1,6 +1,10 @@
 ﻿namespace SeinfeldAPI.Models.DTOs
 {
     /*
+     * POST /api/episodequotes
+     * 
+     * PUT /api/episodequotes
+     * 
      * This Dto is to be used when Adding (POST) or
      * Updating (PUT) a new EpisodeQuote. By using 
      * this Dto, we can still allow the relation 
