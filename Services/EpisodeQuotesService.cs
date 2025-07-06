@@ -92,13 +92,28 @@ namespace SeinfeldAPI.Services
             if (existing == null)
                 return false;
 
-            int? episodeId = ResolveEpisodeId(quoteDto);
-            if (episodeId == null)
-                return false;
+            // Only update Quote if provided
+            if (!string.IsNullOrWhiteSpace(quoteDto.Quote))
+                existing.Quote = quoteDto.Quote;
 
-            existing.Quote = quoteDto.Quote;
-            existing.Character = quoteDto.Character;
-            existing.EpisodeId = episodeId.Value;
+            // Only update Character if provided
+            if (!string.IsNullOrWhiteSpace(quoteDto.Character))
+                existing.Character = quoteDto.Character;
+
+            // Only update EpisodeId if EpisodeId or Title+Season was provided
+            bool shouldTryUpdateEpisode =
+                quoteDto.EpisodeId.HasValue ||
+                (!string.IsNullOrWhiteSpace(quoteDto.EpisodeTitle) &&
+                 !string.IsNullOrWhiteSpace(quoteDto.EpisodeSeason));
+
+            if (shouldTryUpdateEpisode)
+            {
+                int? episodeId = ResolveEpisodeId(quoteDto);
+                if (episodeId == null)
+                    return false;
+
+                existing.EpisodeId = episodeId.Value;
+            }
 
             _quotesRepo.UpdateQuote(existing);
             return _quotesRepo.SaveChanges();
