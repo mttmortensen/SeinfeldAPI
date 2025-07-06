@@ -127,7 +127,7 @@ namespace SeinfeldAPI.Services
         }
 
         // Resolves EpisodeId from either direct Id or from Title + Season
-        private int? ResolveEpisodeId(QuoteCreateDto dto) 
+        private int? ResolveEpisodeId(IEpisodeResolvable dto) 
         {
             // Case 1: EpisodeId is provided directly
             if (dto.EpisodeId.HasValue)
