@@ -16,17 +16,17 @@ namespace SeinfeldAPI.Services
         }
 
         // Get all episodes
-        public List<EpisodeDto> GetAllEpisodes()
+        public List<EpisodeWithQuotesDto> GetAllEpisodes()
         {
             return _episodeRepo.GetAllEpisodes()
-                .Select(e => new EpisodeDto 
+                .Select(e => new EpisodeWithQuotesDto 
                 {
                     Id = e.Id,
                     Title = e.Title,
                     Season = e.Season,
                     EpisodeNumber = e.EpisodeNumber,
                     AirDate = e.AirDate,
-                    Quotes = e.Quotes.Select(q => new EpisodeQuoteFlatDto
+                    Quotes = e.Quotes.Select(q => new QuoteInlineDto
                     {
                         Id = q.Id,
                         Quote = q.Quote,
@@ -38,21 +38,21 @@ namespace SeinfeldAPI.Services
         }
 
         // Get a specific episode by ID
-        public EpisodeDto? GetEpisodeById(int id)
+        public EpisodeWithQuotesDto? GetEpisodeById(int id)
         {
             Episode episode = _episodeRepo.GetEpisodeById(id);
 
             if (episode == null)
                 return null;
 
-            return new EpisodeDto
+            return new EpisodeWithQuotesDto
             {
                 Id = episode.Id,
                 Title = episode.Title,
                 Season = episode.Season,
                 EpisodeNumber = episode.EpisodeNumber,
                 AirDate = episode.AirDate,
-                Quotes = episode.Quotes.Select(q => new EpisodeQuoteFlatDto
+                Quotes = episode.Quotes.Select(q => new QuoteInlineDto
                 {
                     Id = q.Id,
                     Quote = q.Quote,
@@ -63,7 +63,7 @@ namespace SeinfeldAPI.Services
         }
 
         // Add a new episode
-        public EpisodeDto? AddEpisode(EpisodeDto episodeDto)
+        public EpisodeWithQuotesDto? AddEpisode(EpisodeWithQuotesDto episodeDto)
         {
             Episode episode = new Episode
             {
@@ -88,13 +88,13 @@ namespace SeinfeldAPI.Services
                 return null;
 
             // Map to DTO here and return
-            return new EpisodeDto
+            return new EpisodeWithQuotesDto
             {
                 Title = episode.Title,
                 Season = episode.Season,
                 EpisodeNumber = episode.EpisodeNumber,
                 AirDate = episode.AirDate,
-                Quotes = episode.Quotes.Select(q => new EpisodeQuoteFlatDto
+                Quotes = episode.Quotes.Select(q => new QuoteInlineDto
                 {
                     Quote = q.Quote,
                     Character = q.Character
@@ -105,7 +105,7 @@ namespace SeinfeldAPI.Services
 
 
         // Update an existing episode
-        public bool UpdateEpisode(EpisodeFlatDto episodeFlatDto)
+        public bool UpdateEpisode(EpisodeUpdateDto episodeFlatDto)
         {
             // Checks to see if the Raw Episode exists 
             // With the EpisdoeFlatDTO Id

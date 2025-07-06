@@ -17,10 +17,10 @@ namespace SeinfeldAPI.Services
         }
 
         // Get all quotes from all episodes
-        public List<EpisodeQuoteDto> GetAllQuotes()
+        public List<QuoteCreateOrUpdateDto> GetAllQuotes()
         {
             return _quotesRepo.GetAllQuotes()
-                .Select(q => new EpisodeQuoteDto 
+                .Select(q => new QuoteCreateOrUpdateDto 
                 {
                     Id = q.Id,
                     Quote = q.Quote,
@@ -33,10 +33,10 @@ namespace SeinfeldAPI.Services
         }
 
         // Get all quotes for a specific episode
-        public List<EpisodeQuoteDto> GetQuotesForEpisode(int episodeId)
+        public List<QuoteCreateOrUpdateDto> GetQuotesForEpisode(int episodeId)
         {
             return _quotesRepo.GetQuotesForEpisode(episodeId)
-                .Select(q => new EpisodeQuoteDto 
+                .Select(q => new QuoteCreateOrUpdateDto 
                 {
                     Id = q.Id,
                     Quote = q.Quote,
@@ -49,14 +49,14 @@ namespace SeinfeldAPI.Services
         }
 
         // Get a single quote by ID
-        public EpisodeQuoteDto? GetQuoteById(int id)
+        public QuoteCreateOrUpdateDto? GetQuoteById(int id)
         {
             EpisodeQuotes quote = _quotesRepo.GetQuoteById(id);
 
             if (quote == null || quote.Episode == null)
                 return null;
 
-            return new EpisodeQuoteDto
+            return new QuoteCreateOrUpdateDto
             {
                 Id = quote.Id,
                 Quote = quote.Quote,
@@ -68,7 +68,7 @@ namespace SeinfeldAPI.Services
         }
 
         // Add a new quote (only if the episode exists)
-        public bool AddQuote(EpisodeQuoteDto quoteDto)
+        public bool AddQuote(QuoteCreateOrUpdateDto quoteDto)
         {
             int? episodeId = ResolveEpisodeId(quoteDto);
             if (episodeId == null)
@@ -86,7 +86,7 @@ namespace SeinfeldAPI.Services
         }
 
         // Update an existing quote
-        public bool UpdateQuote(EpisodeQuoteDto quoteDto)
+        public bool UpdateQuote(QuoteCreateOrUpdateDto quoteDto)
         {
             EpisodeQuotes existing = _quotesRepo.GetQuoteById(quoteDto.Id);
             if (existing == null)
@@ -112,7 +112,7 @@ namespace SeinfeldAPI.Services
         }
 
         // Resolves EpisodeId from either direct Id or from Title + Season
-        private int? ResolveEpisodeId(EpisodeQuoteDto dto) 
+        private int? ResolveEpisodeId(QuoteCreateOrUpdateDto dto) 
         {
             // Case 1: EpisodeId is provided directly
             if (dto.EpisodeId.HasValue)

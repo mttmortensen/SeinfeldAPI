@@ -10,7 +10,7 @@
      * this Dto, we can still allow the relation 
      * between Episode and EpisodeQuote to happen.
      */
-    public class EpisodeQuoteDto
+    public class QuoteCreateOrUpdateDto
     {
         public int Id { get; set; }
         public string Quote { get; set; }

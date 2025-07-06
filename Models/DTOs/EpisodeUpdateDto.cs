@@ -9,7 +9,7 @@
      * This keeps it seperate
      */
 
-    public class EpisodeFlatDto
+    public class EpisodeUpdateDto
     {
         public int Id { get; set; }
         public string? Title { get; set; }

@@ -22,10 +22,10 @@ namespace SeinfeldAPI.Controllers
 
         // Handles GET requests to /api/epsiodes
         [HttpGet]
-        public ActionResult<List<EpisodeDto>> GetAllEpisodes()
+        public ActionResult<List<EpisodeWithQuotesDto>> GetAllEpisodes()
         {
             // Fetches all episodes from the service
-            List<EpisodeDto> episodes = _episodeService.GetAllEpisodes();
+            List<EpisodeWithQuotesDto> episodes = _episodeService.GetAllEpisodes();
 
             // Return 200 OK with the list of episodes
             return Ok(episodes);
@@ -33,10 +33,10 @@ namespace SeinfeldAPI.Controllers
 
         // Handles GET requests to /api/episodes/{id}
         [HttpGet("{id}")]
-        public ActionResult<EpisodeDto> GetEpisodeById(int id)
+        public ActionResult<EpisodeWithQuotesDto> GetEpisodeById(int id)
         {
             // Try to get the episode by it's Id
-            EpisodeDto episode = _episodeService.GetEpisodeById(id);
+            EpisodeWithQuotesDto episode = _episodeService.GetEpisodeById(id);
 
             // If no match, return 404
             if (episode == null)
@@ -48,7 +48,7 @@ namespace SeinfeldAPI.Controllers
 
         // Handles POST requests to /api/episodes for a new episode
         [HttpPost]
-        public ActionResult AddEpisode([FromBody] EpisodeDto episodeDto)
+        public ActionResult AddEpisode([FromBody] EpisodeWithQuotesDto episodeDto)
         {
             var created = _episodeService.AddEpisode(episodeDto);
 
@@ -60,7 +60,7 @@ namespace SeinfeldAPI.Controllers
 
         // Handles PUT request to to update an existing episode
         [HttpPut("{id}")]
-        public ActionResult UpdateEpisode(int id, [FromBody] EpisodeFlatDto episode) 
+        public ActionResult UpdateEpisode(int id, [FromBody] EpisodeUpdateDto episode) 
         {
             // Return 400 if Ids don't match
             if (id != episode.Id)

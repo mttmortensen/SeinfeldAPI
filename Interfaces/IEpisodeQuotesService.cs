@@ -4,11 +4,11 @@ namespace SeinfeldAPI.Interfaces
 {
     public interface IEpisodeQuotesService
     {
-        List<EpisodeQuoteDto> GetAllQuotes();
-        List<EpisodeQuoteDto> GetQuotesForEpisode(int episodeId);
-        EpisodeQuoteDto? GetQuoteById(int id);
-        bool AddQuote(EpisodeQuoteDto quote);
-        bool UpdateQuote(EpisodeQuoteDto quote);
+        List<QuoteCreateOrUpdateDto> GetAllQuotes();
+        List<QuoteCreateOrUpdateDto> GetQuotesForEpisode(int episodeId);
+        QuoteCreateOrUpdateDto? GetQuoteById(int id);
+        bool AddQuote(QuoteCreateOrUpdateDto quote);
+        bool UpdateQuote(QuoteCreateOrUpdateDto quote);
         bool DeleteQuote(int id);
     }
 }

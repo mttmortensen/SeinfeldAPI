@@ -4,10 +4,10 @@ namespace SeinfeldAPI.Interfaces
 {
     public interface IEpisodeService
     {
-        List<EpisodeDto> GetAllEpisodes();
-        EpisodeDto? GetEpisodeById(int id);
-        EpisodeDto? AddEpisode(EpisodeDto episode);
-        bool UpdateEpisode(EpisodeFlatDto episode);
+        List<EpisodeWithQuotesDto> GetAllEpisodes();
+        EpisodeWithQuotesDto? GetEpisodeById(int id);
+        EpisodeWithQuotesDto? AddEpisode(EpisodeWithQuotesDto episode);
+        bool UpdateEpisode(EpisodeUpdateDto episode);
         bool DeleteEpisode(int id);
     }
 }

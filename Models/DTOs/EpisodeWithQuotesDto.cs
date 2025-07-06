@@ -1,6 +1,6 @@
 ﻿namespace SeinfeldAPI.Models.DTOs
 {
-    public class EpisodeDto
+    public class EpisodeWithQuotesDto
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -9,6 +9,6 @@
         public DateTime AirDate { get; set; }
 
         // Including now the simplifed EpisodeQuotes data
-        public List<EpisodeQuoteFlatDto> Quotes { get; set; }
+        public List<QuoteInlineDto> Quotes { get; set; }
     }
 }

@@ -14,7 +14,7 @@
      * This will also be used in the POST method for creating an Episode
      * As doing EpisodeQuoteDto would require to place the title and season again
      */
-    public class EpisodeQuoteFlatDto
+    public class QuoteInlineDto
     {
         public int Id { get; set; }
         public string Quote { get; set; }
