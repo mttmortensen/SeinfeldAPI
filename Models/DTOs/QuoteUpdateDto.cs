@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SeinfeldAPI.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace SeinfeldAPI.Models.DTOs
 {
@@ -11,7 +12,7 @@ namespace SeinfeldAPI.Models.DTOs
      * So that not each value needs to be updated
      */
 
-    public class QuoteUpdateDto
+    public class QuoteUpdateDto : IEpisodeResolvable
     {
         public int Id { get; set; }
 

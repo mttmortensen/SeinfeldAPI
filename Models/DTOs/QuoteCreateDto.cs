@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SeinfeldAPI.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace SeinfeldAPI.Models.DTOs
 {
@@ -10,7 +11,7 @@ namespace SeinfeldAPI.Models.DTOs
      * By using this Dto, we can still allow the relation 
      * between Episode and EpisodeQuote to happen.
      */
-    public class QuoteCreateDto
+    public class QuoteCreateDto : IEpisodeResolvable
     {
         public int Id { get; set; }
 
