@@ -14,7 +14,6 @@ namespace SeinfeldAPI.Models.DTOs
 
     public class QuoteUpdateDto : IEpisodeResolvable
     {
-        public int Id { get; set; }
 
         [StringLength(300)]
         public string? Quote { get; set; }
