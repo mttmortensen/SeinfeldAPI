@@ -1,6 +1,8 @@
 
 using SeinfeldAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 using SeinfeldAPI.Interfaces;
 using SeinfeldAPI.Repo;
 using SeinfeldAPI.Services;
@@ -35,6 +37,19 @@ namespace SeinfeldAPI
             // DB Connection Service
             builder.Services.AddDbContext<SeinfeldDbContext>(options => 
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+            // Rate Limiting
+            builder.Services.AddRateLimiter(options =>
+            {
+                options.AddFixedWindowLimiter(policyName: "fixed", config =>
+                {
+                    config.PermitLimit = 5; // Max 5 requests
+                    config.Window = TimeSpan.FromSeconds(10); // Every 10 seconds
+                    config.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                    config.QueueLimit = 2;
+                });
+            });
 
             var app = builder.Build();
 
