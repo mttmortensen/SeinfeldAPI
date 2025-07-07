@@ -1,9 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using SeinfeldAPI.Interfaces;
 using SeinfeldAPI.Models.DTOs;
 
 namespace SeinfeldAPI.Controllers
 {
+    // I'll be doing RateLimiting at the Controller level
+    // If this scales out then I can apply this down to more specific routes
+    [EnableRateLimiting("fixed")]
+
     // Marks this class as an API controller
     [ApiController]
 
