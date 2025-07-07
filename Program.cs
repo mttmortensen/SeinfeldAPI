@@ -1,11 +1,12 @@
 
-using SeinfeldAPI.Data;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.RateLimiting;
-using System.Threading.RateLimiting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using SeinfeldAPI.Data;
 using SeinfeldAPI.Interfaces;
 using SeinfeldAPI.Repo;
 using SeinfeldAPI.Services;
+using System.Threading.RateLimiting;
 
 namespace SeinfeldAPI
 {
@@ -23,7 +24,12 @@ namespace SeinfeldAPI
 
             // Set the custom port for Kestrel
             // This is going to be used for hosting this as a service on MRTN-APPS
-            builder.WebHost.UseUrls("http://localhost:5055");
+            builder.WebHost.ConfigureKestrel((context, options) =>
+            {
+                // Only configure if explicitly in config
+                options.Configure(context.Configuration.GetSection("Kestrel"));
+            });
+            
             /*
              * When you return a list of Episodes with their quotes 
              * which each have an episode, which has quotes, 
