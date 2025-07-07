@@ -86,9 +86,9 @@ namespace SeinfeldAPI.Services
         }
 
         // Update an existing quote
-        public bool UpdateQuote(QuoteUpdateDto quoteDto)
+        public bool UpdateQuote(int Id, QuoteUpdateDto quoteDto)
         {
-            EpisodeQuotes existing = _quotesRepo.GetQuoteById(quoteDto.Id);
+            EpisodeQuotes existing = _quotesRepo.GetQuoteById(Id);
             if (existing == null)
                 return false;
 
