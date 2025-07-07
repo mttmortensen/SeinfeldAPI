@@ -21,7 +21,9 @@ namespace SeinfeldAPI
             builder.Services.AddScoped<IEpisodeService, EpisodeService>();
             builder.Services.AddScoped<IEpisodeQuotesService, EpisodeQuotesService>();
 
-
+            // Set the custom port for Kestrel
+            // This is going to be used for hosting this as a service on MRTN-APPS
+            builder.WebHost.UseUrls("http://localhost:5055");
             /*
              * When you return a list of Episodes with their quotes 
              * which each have an episode, which has quotes, 
