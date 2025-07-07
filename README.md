@@ -84,3 +84,10 @@ SeinfeldAPI/
 - 🌐 **Publicly Accessible** — Hosted via Cloudflare Tunnel
 
 ---
+
+## 🧠 Inspiration
+Built to flex ASP.NET Core architecture skills while paying homage to the greatest sitcom of all time. Yada yada yada... now it's real.
+
+### ✍️ Author
+Made with love by Matt Mortensen
+__“You can't be a little bit pregnant.”__ – Jerry Seinfeld
