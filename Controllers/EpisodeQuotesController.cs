@@ -77,14 +77,11 @@ namespace SeinfeldAPI.Controllers
 
         // Handles PUT requests to update a quote by ID
         [HttpPut("{id}")]
-        public ActionResult UpdateQuote(int id, [FromBody] QuoteCreateDto quote)
+        public ActionResult UpdateQuote(int id, [FromBody] QuoteUpdateDto quote)
         {
-            // If the ID in URL doesn't match the one in body, reject it
-            if (id != quote.Id)
-                return BadRequest("ID in URL doesn't match ID in body.");
 
             // Try to update the quote
-            bool success = _quotesService.UpdateQuote(quote);
+            bool success = _quotesService.UpdateQuote(id, quote);
 
             // If update failed (e.g. quote doesn’t exist), return 404
             if (!success)
