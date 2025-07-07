@@ -89,5 +89,13 @@ SeinfeldAPI/
 Built to flex ASP.NET Core architecture skills while paying homage to the greatest sitcom of all time. Yada yada yada... now it's real.
 
 ### ✍️ Author
-Made with love by Matt Mortensen
+Made with love by Matt Mortensen  
 __“You can't be a little bit pregnant.”__ – Jerry Seinfeld
+
+### 📄 License
+
+This project is licensed under the MIT License.
+
+You are free to use, modify, distribute, and even rebrand this API for your own use — just include the original license and credit when appropriate.
+
+See the full [LICENSE](./LICENSE) file for details.

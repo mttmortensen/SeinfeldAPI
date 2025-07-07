@@ -377,3 +377,6 @@ appsettings.json
 
 # Logs and build artifacts
 *.log
+
+# License file
+LICENSE.txt
