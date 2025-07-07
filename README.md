@@ -29,3 +29,57 @@ Built with clarity and control in mind, using a layered architecture (Models →
 
 ## 📁 Project Structure
 
+SeinfeldAPI/
+├── Controllers/
+│ └── EpisodeController.cs
+│ └── EpisodeQuotesController.cs
+├── Models/
+│ ├── Episode.cs
+│ └── EpisodeQuotes.cs
+├── Models/DTOs/
+│ ├── EpisodeDto.cs
+│ ├── EpisodeFlatDto.cs
+│ ├── EpisodeQuoteDto.cs
+│ └── EpisodeQuoteFlatDto.cs
+├── Repo/
+│ └── Interfaces & Repositories
+├── Services/
+│ └── EpisodeService.cs
+│ └── EpisodeQuotesService.cs
+
+---
+
+## 🔌 Endpoints
+
+### Episodes
+
+| Method | Route               | Description                      |
+|--------|---------------------|----------------------------------|
+| GET    | `/api/episodes`     | Get all episodes with quotes     |
+| GET    | `/api/episodes/{id}`| Get specific episode by ID       |
+| POST   | `/api/episodes`     | Add a new episode + quotes       |
+| PUT    | `/api/episodes`     | Update episode info              |
+| DELETE | `/api/episodes/{id}`| Delete episode and its quotes    |
+
+### Episode Quotes
+
+| Method | Route                     | Description                    |
+|--------|---------------------------|--------------------------------|
+| GET    | `/api/episodequotes`      | Get all quotes                 |
+| GET    | `/api/episodequotes/{id}` | Get single quote by ID         |
+| GET    | `/api/episodes/{id}/quotes`| Get all quotes for an episode |
+| POST   | `/api/episodequotes`      | Add a new quote                |
+| PUT    | `/api/episodequotes`      | Update a quote                 |
+| DELETE | `/api/episodequotes/{id}` | Delete a quote                 |
+
+---
+
+## 📌 Key Features
+
+- 🔄 **Flexible Updates** — Partial updates allowed on PUT
+- 🔗 **Quote-to-Episode Linking** — By ID or by Title+Season
+- 🧼 **DTO Separation** — Clean layers for GET, POST, PUT
+- 🧪 **Fully Tested** — Manually verified endpoints during development
+- 🌐 **Publicly Accessible** — Hosted via Cloudflare Tunnel
+
+---
