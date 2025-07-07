@@ -61,8 +61,9 @@ namespace SeinfeldAPI
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseRateLimiter();
 
+            app.UseAuthorization();
 
             app.MapControllers();
 
