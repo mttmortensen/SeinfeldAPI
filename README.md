@@ -29,23 +29,24 @@ Built with clarity and control in mind, using a layered architecture (Models →
 
 ## 📁 Project Structure
 
-SeinfeldAPI/
-├── Controllers/
-│ └── EpisodeController.cs
-│ └── EpisodeQuotesController.cs
-├── Models/
-│ ├── Episode.cs
-│ └── EpisodeQuotes.cs
-├── Models/DTOs/
-│ ├── EpisodeDto.cs
-│ ├── EpisodeFlatDto.cs
-│ ├── EpisodeQuoteDto.cs
-│ └── EpisodeQuoteFlatDto.cs
-├── Repo/
-│ └── Interfaces & Repositories
-├── Services/
-│ └── EpisodeService.cs
-│ └── EpisodeQuotesService.cs
+SeinfeldAPI/  
+├── Controllers/  
+│ └── EpisodeController.cs  
+│ └── EpisodeQuotesController.cs  
+├── Models/  
+│ ├── Episode.cs  
+│ └── EpisodeQuotes.cs  
+├── Models/DTOs/  
+│ ├── EpisodeUpdateDto.cs  
+│ ├── EpisodeWithQuotesDto.cs  
+│ ├── QuoteCreateDto.cs  
+│ ├── QuoteInlineDto.cs  
+│ └── QuoteUpdateDto.cs  
+├── Repo/  
+│ └── Interfaces & Repositories  
+├── Services/  
+│ └── EpisodeService.cs  
+│ └── EpisodeQuotesService.cs  
 
 ---
 
