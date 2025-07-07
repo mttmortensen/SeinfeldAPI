@@ -2,6 +2,10 @@
 
 A custom-built ASP.NET Core Web API that brings the iconic world of *Seinfeld* to life through structured episode and quote data. Fully layered, RESTful, and now proudly hosted live on the internet.
 
+Episode URL: `https://api.mortensens.xyz/seinfeld/api/episodes`
+
+Episode Quotes URL: `https://api.mortensens.xyz/seinfeld/api/episodequotes`
+
 ---
 
 ## 📦 Overview
