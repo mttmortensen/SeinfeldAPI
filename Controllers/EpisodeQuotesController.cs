@@ -25,8 +25,10 @@ namespace SeinfeldAPI.Controllers
             _quotesService = quotesService;
         }
 
-        // Handles GET requests to /api/episodequotes
-        // This brings in all quotes from the db 
+        /// <summary>
+        /// Gets all quotes from all episodes.
+        /// </summary>
+        /// <returns>A list of all episode quotes across the series.</returns>
         [HttpGet]
         public ActionResult<List<QuoteCreateDto>> GetAllQuotes()
         {
@@ -37,8 +39,11 @@ namespace SeinfeldAPI.Controllers
             return Ok(quotes);
         }
 
-        // Handles GET requests to /api/episodequotes/episode/{episodeId}
-        // This brings in all the quotes for a specific episode
+        /// <summary>
+        /// Gets all quotes for a specific episode.
+        /// </summary>
+        /// <param name="episodeId">The ID of the episode.</param>
+        /// <returns>A list of quotes tied to the specified episode.</returns>
         [HttpGet("episode/{episodeId}")]
         public ActionResult<List<QuoteCreateDto>> GetQuotesForEpisode(int episodeId)
         {
@@ -49,7 +54,12 @@ namespace SeinfeldAPI.Controllers
             return Ok(quotes);
         }
 
-        // Handles GET requests to /api/episodequotes/{id}
+
+        /// <summary>
+        /// Gets a single quote by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the quote to retrieve.</param>
+        /// <returns>The quote data, or 404 if not found.</returns>
         [HttpGet("{id}")]
         public ActionResult<QuoteCreateDto> GetQuoteById(int id)
         {
@@ -64,8 +74,11 @@ namespace SeinfeldAPI.Controllers
             return Ok(quote);
         }
 
-        // Handles POST requests to add a new quote and will add to the correct episode 
-        // thanks to service layer
+        /// <summary>
+        /// Adds a new quote and links it to an episode.
+        /// </summary>
+        /// <param name="quote">The quote data to add.</param>
+        /// <returns>201 Created if successful, or 400 if the quote could not be added.</returns>
         [HttpPost]
         public ActionResult AddQuote([FromBody] QuoteCreateDto quote)
         {
@@ -80,7 +93,12 @@ namespace SeinfeldAPI.Controllers
             return CreatedAtAction(nameof(GetQuoteById), new { id = quote.Id }, quote);
         }
 
-        // Handles PUT requests to update a quote by ID
+        /// <summary>
+        /// Updates an existing quote.
+        /// </summary>
+        /// <param name="id">The ID of the quote to update.</param>
+        /// <param name="quote">The updated quote data.</param>
+        /// <returns>204 No Content if successful, 400 if the ID is mismatched, or 404 if not found.</returns>
         [HttpPut("{id}")]
         public ActionResult UpdateQuote(int id, [FromBody] QuoteUpdateDto quote)
         {
@@ -96,7 +114,11 @@ namespace SeinfeldAPI.Controllers
             return NoContent();
         }
 
-        // Handles DELETE requests to remove a quote by ID
+        /// <summary>
+        /// Deletes a quote by ID.
+        /// </summary>
+        /// <param name="id">The ID of the quote to delete.</param>
+        /// <returns>204 No Content if deleted, or 404 if not found.</returns>
         [HttpDelete("{id}")]
         public ActionResult DeleteQuote(int id)
         {
