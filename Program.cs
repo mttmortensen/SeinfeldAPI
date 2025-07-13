@@ -75,6 +75,7 @@ namespace SeinfeldAPI
             var app = builder.Build();
 
             // Enable Swagger for all environments (or restrict to dev if preferred)
+            app.UsePathBase("/seinfeld");
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
