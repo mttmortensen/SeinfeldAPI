@@ -49,6 +49,10 @@ namespace SeinfeldAPI
                     Title = "Seinfeld API",
                     Version = "v1"
                 });
+
+                var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
             });
 
             // DB Connection Service
@@ -76,6 +80,8 @@ namespace SeinfeldAPI
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Seinfeld API v1");
                 c.RoutePrefix = "swagger"; // URL will be /swagger
+
+
             });
 
             app.UseHttpsRedirection();
