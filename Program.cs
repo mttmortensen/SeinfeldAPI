@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using SeinfeldAPI.Data;
 using SeinfeldAPI.Interfaces;
 using SeinfeldAPI.Repo;
@@ -39,8 +40,16 @@ namespace SeinfeldAPI
                 .AddJsonOptions(x =>
                     x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve);
 
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
+            // === Swagger / OpenAPI ===
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Seinfeld API",
+                    Version = "v1"
+                });
+            });
 
             // DB Connection Service
             builder.Services.AddDbContext<SeinfeldDbContext>(options => 
@@ -61,11 +70,13 @@ namespace SeinfeldAPI
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            // Enable Swagger for all environments (or restrict to dev if preferred)
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                app.MapOpenApi();
-            }
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Seinfeld API v1");
+                c.RoutePrefix = "swagger"; // URL will be /swagger
+            });
 
             app.UseHttpsRedirection();
 
