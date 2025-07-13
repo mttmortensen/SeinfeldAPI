@@ -25,7 +25,10 @@ namespace SeinfeldAPI.Controllers
             _episodeService = episodeService;
         }
 
-        // Handles GET requests to /api/epsiodes
+        /// <summary>
+        /// Gets all episodes with their associated quotes.
+        /// </summary>
+        /// <returns>A list of episodes with quote data.</returns>
         [HttpGet]
         public ActionResult<List<EpisodeWithQuotesDto>> GetAllEpisodes()
         {
@@ -36,7 +39,11 @@ namespace SeinfeldAPI.Controllers
             return Ok(episodes);
         }
 
-        // Handles GET requests to /api/episodes/{id}
+        /// <summary>
+        /// Gets a single episode by ID.
+        /// </summary>
+        /// <param name="id">The ID of the episode.</param>
+        /// <returns>The episode with quote data, or 404 if not found.</returns>
         [HttpGet("{id}")]
         public ActionResult<EpisodeWithQuotesDto> GetEpisodeById(int id)
         {
@@ -51,7 +58,11 @@ namespace SeinfeldAPI.Controllers
             return Ok(episode);
         }
 
-        // Handles POST requests to /api/episodes for a new episode
+        /// <summary>
+        /// Creates a new episode with optional quotes.
+        /// </summary>
+        /// <param name="episodeDto">The episode data to create.</param>
+        /// <returns>The created episode, or 400 if creation failed.</returns>
         [HttpPost]
         public ActionResult AddEpisode([FromBody] EpisodeWithQuotesDto episodeDto)
         {
@@ -63,7 +74,12 @@ namespace SeinfeldAPI.Controllers
             return CreatedAtAction(nameof(GetEpisodeById), new { id = created.Id }, created);
         }
 
-        // Handles PUT request to to update an existing episode
+        /// <summary>
+        /// Updates an existing episode.
+        /// </summary>
+        /// <param name="id">The ID of the episode to update.</param>
+        /// <param name="episode">The updated episode data.</param>
+        /// <returns>204 No Content if successful, 400 or 404 otherwise.</returns>
         [HttpPut("{id}")]
         public ActionResult UpdateEpisode(int id, [FromBody] EpisodeUpdateDto episode) 
         {
@@ -82,7 +98,11 @@ namespace SeinfeldAPI.Controllers
             return NoContent();
         }
 
-        // Handles DELETE requests to remove an episode
+        /// <summary>
+        /// Deletes an episode by ID.
+        /// </summary>
+        /// <param name="id">The ID of the episode to delete.</param>
+        /// <returns>204 No Content if deleted, 404 if not found.</returns>
         [HttpDelete("{id}")]
         public ActionResult DeleteEpisode(int id)
         {
