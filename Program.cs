@@ -50,6 +50,11 @@ namespace SeinfeldAPI
                     Version = "v1"
                 });
 
+                options.AddServer(new OpenApiServer
+                {
+                    Url = "/seinfeld"
+                });
+
                 var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath);
@@ -76,14 +81,14 @@ namespace SeinfeldAPI
 
             // Enable Swagger for all environments (or restrict to dev if preferred)
             app.UsePathBase("/seinfeld");
+            app.UseStaticFiles();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Seinfeld API v1");
-                c.RoutePrefix = "swagger"; // URL will be /swagger
-
-
+                c.SwaggerEndpoint("/seinfeld/swagger/v1/swagger.json", "Seinfeld API v1");
+                c.RoutePrefix = "swagger"; // Makes it accessible at /seinfeld/swagger
             });
+            app.UseRouting();
 
             app.UseHttpsRedirection();
 
