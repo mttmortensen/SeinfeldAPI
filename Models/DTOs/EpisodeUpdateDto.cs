@@ -25,13 +25,13 @@ namespace SeinfeldAPI.Models.DTOs
         /// <summary>
         /// Season must be in the format 'S1' to 'S9' with no leading zeros.
         /// </summary>
-        [RegularExpression(@"^S[1-9]$", ErrorMessage = "Season must be in the format 'S1' to 'S9' with no leading zeros.")]
+        [ValidSeasonOrEpisodeNumber(ValidSeasonOrEpisodeNumber.ValidationType.Season)]
         public string? Season { get; set; }
 
         /// <summary>
         /// EpisodeNumber must be in the format 'E1' to 'E30' with no leading zeros.
         /// </summary>
-        [RegularExpression(@"^E([1-9]|[1-2][0-9]|30)$", ErrorMessage = "EpisodeNumber must be in the format 'E1' to 'E30' with no leading zeros.")]
+        [ValidSeasonOrEpisodeNumber(ValidSeasonOrEpisodeNumber.ValidationType.EpisodeNumber)]
         public string? EpisodeNumber { get; set; }
 
         public DateTime? AirDate { get; set; }

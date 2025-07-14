@@ -33,7 +33,10 @@ namespace SeinfeldAPI.Models.DTOs
         [ValidSeinfeldTitle]
         public string? EpisodeTitle { get; set; }
 
-
+        /// <summary>
+        /// Season must be in the format 'S1' to 'S9' with no leading zeros.
+        /// </summary>
+        [ValidSeasonOrEpisodeNumber(ValidSeasonOrEpisodeNumber.ValidationType.Season)]
         public string? EpisodeSeason { get; set; }
     }
 
