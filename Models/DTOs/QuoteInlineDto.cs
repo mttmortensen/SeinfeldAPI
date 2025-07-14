@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SeinfeldAPI.Services.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace SeinfeldAPI.Models.DTOs
 {
@@ -24,8 +25,10 @@ namespace SeinfeldAPI.Models.DTOs
         [StringLength(300, MinimumLength = 1)]
         public string Quote { get; set; }
 
-        [Required]
-        [StringLength(100)]
+        /// <summary>
+        /// Character must be part of the original 4 characters: Jerry, George, Elanie, and Kramer.
+        /// </summary>
+        [ValidMainCharacter]
         public string Character { get; set; }
 
         public int EpisodeId { get; set; }

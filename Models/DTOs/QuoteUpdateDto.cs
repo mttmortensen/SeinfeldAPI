@@ -19,18 +19,21 @@ namespace SeinfeldAPI.Models.DTOs
         [StringLength(300)]
         public string? Quote { get; set; }
 
-        [StringLength(100)]
+        /// <summary>
+        /// Character must be part of the original 4 characters: Jerry, George, Elanie, and Kramer.
+        /// </summary>
+        [ValidMainCharacter]
         public string? Character { get; set; }
 
         public int? EpisodeId { get; set; }
-
-        [StringLength(100)]
-        public string? EpisodeTitle { get; set; }
 
         /// <summary>
         /// The episode title must start with "The ", and be between 8–21 characters.
         /// </summary>
         [ValidSeinfeldTitle]
+        public string? EpisodeTitle { get; set; }
+
+
         public string? EpisodeSeason { get; set; }
     }
 
