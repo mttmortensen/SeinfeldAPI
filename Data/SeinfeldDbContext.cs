@@ -16,5 +16,8 @@ namespace SeinfeldAPI.Data
         // Same thing here: This maps the EpisodeQuotes model to the SQL Table
         public DbSet<EpisodeQuotes> EpisodeQuotes { get; set; }
 
+        // We're now creating a table for EF to use for Users domain
+        public DbSet<User> Users { get; set; }
+
     }
 }
