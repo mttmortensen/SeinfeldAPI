@@ -29,6 +29,7 @@ namespace SeinfeldAPI.Models.DTOs
         /// Character must be part of the original 4 characters: Jerry, George, Elanie, and Kramer.
         /// </summary>
         [ValidMainCharacter]
+        [Required]
         public string Character { get; set; }
 
         public int EpisodeId { get; set; }
