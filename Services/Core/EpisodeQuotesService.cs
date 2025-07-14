@@ -3,7 +3,7 @@ using SeinfeldAPI.Models;
 using SeinfeldAPI.Models.DTOs;
 using SeinfeldAPI.Repo;
 
-namespace SeinfeldAPI.Services
+namespace SeinfeldAPI.Services.Core
 {
     public class EpisodeQuotesService : IEpisodeQuotesService
     {
@@ -103,8 +103,8 @@ namespace SeinfeldAPI.Services
             // Only update EpisodeId if EpisodeId or Title+Season was provided
             bool shouldTryUpdateEpisode =
                 quoteDto.EpisodeId.HasValue ||
-                (!string.IsNullOrWhiteSpace(quoteDto.EpisodeTitle) &&
-                 !string.IsNullOrWhiteSpace(quoteDto.EpisodeSeason));
+                !string.IsNullOrWhiteSpace(quoteDto.EpisodeTitle) &&
+                 !string.IsNullOrWhiteSpace(quoteDto.EpisodeSeason);
 
             if (shouldTryUpdateEpisode)
             {

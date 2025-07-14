@@ -2,7 +2,7 @@
 using SeinfeldAPI.Models;
 using SeinfeldAPI.Models.DTOs;
 
-namespace SeinfeldAPI.Services
+namespace SeinfeldAPI.Services.Core
 {
     public class EpisodeService : IEpisodeService
     {

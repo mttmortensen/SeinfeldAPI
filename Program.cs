@@ -6,7 +6,7 @@ using Microsoft.OpenApi.Models;
 using SeinfeldAPI.Data;
 using SeinfeldAPI.Interfaces;
 using SeinfeldAPI.Repo;
-using SeinfeldAPI.Services;
+using SeinfeldAPI.Services.Core;
 using System.Threading.RateLimiting;
 
 namespace SeinfeldAPI
