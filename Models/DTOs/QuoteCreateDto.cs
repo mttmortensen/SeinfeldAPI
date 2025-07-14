@@ -1,4 +1,5 @@
 ﻿using SeinfeldAPI.Interfaces;
+using SeinfeldAPI.Services.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace SeinfeldAPI.Models.DTOs
@@ -27,6 +28,10 @@ namespace SeinfeldAPI.Models.DTOs
         // via ResolveEpisodeId()
         public int? EpisodeId { get; set; }
 
+        /// <summary>
+        /// The episode title must start with "The ", and be between 8–21 characters.
+        /// </summary>
+        [ValidSeinfeldTitle]
         [StringLength(100)]
         public string? EpisodeTitle { get; set; }
 
