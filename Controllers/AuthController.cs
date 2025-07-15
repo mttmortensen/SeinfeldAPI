@@ -17,7 +17,17 @@ namespace SeinfeldAPI.Controllers
             _authService = authService;
         }
 
+        /// <summary>
+        /// Logs in a user and returns a JWT token for authentication.
+        /// </summary>
+        /// <param name="request">The username and password of the user.</param>
+        /// <returns>
+        /// 200 OK with JWT token if login is successful.  
+        /// 401 Unauthorized if credentials are invalid.
+        /// </returns>
         [HttpPost("login")]
+        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(object), StatusCodes.Status401Unauthorized)]
         public IActionResult Login([FromBody] LoginRequestDto request) 
         {
             if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
@@ -35,7 +45,19 @@ namespace SeinfeldAPI.Controllers
             });
         }
 
+        /// <summary>
+        /// Registers a new user.
+        /// </summary>
+        /// <param name="request">The username and password for the new account.</param>
+        /// <returns>
+        /// 200 OK if registration is successful.  
+        /// 400 Bad Request if data is invalid.  
+        /// 409 Conflict if username already exists.
+        /// </returns>
         [HttpPost("register")]
+        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(object), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(object), StatusCodes.Status409Conflict)]
         public IActionResult Register([FromBody] RegisterDto request)
         {
             if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
