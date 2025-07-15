@@ -1,5 +1,7 @@
 ﻿using SeinfeldAPI.Interfaces;
 using SeinfeldAPI.Services.Security;
+using SeinfeldAPI.Models;
+using BCrypt.Net;
 
 namespace SeinfeldAPI.Services.Core
 {
@@ -16,7 +18,19 @@ namespace SeinfeldAPI.Services.Core
 
         public bool Register(string username, string password) 
         {
+            if (_userRepo.GetUserByUsername(username) != null)
+                return false;
 
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+
+            User newUser = new User 
+            {
+                Username = username,
+                PasswordHash = hashedPassword
+            };
+
+            _userRepo.AddUser(newUser);
+            return _userRepo.SaveChanges();
         }
 
         public string Login(string username, string password) { }
