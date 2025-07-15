@@ -33,6 +33,14 @@ namespace SeinfeldAPI.Services.Core
             return _userRepo.SaveChanges();
         }
 
-        public string Login(string username, string password) { }
+        public string Login(string username, string password) 
+        {
+            User user = _userRepo.GetUserByUsername(username);
+
+            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
+                return null;
+
+            return _jwtHelper.GenerateToken(username);
+        }
     }
 }
