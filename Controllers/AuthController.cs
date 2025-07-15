@@ -34,5 +34,19 @@ namespace SeinfeldAPI.Controllers
                 token
             });
         }
+
+        [HttpPost("register")]
+        public IActionResult Register([FromBody] RegisterDto request)
+        {
+            if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
+                return BadRequest(new { message = "Username and password are required." });
+
+            bool success = _authService.Register(request.Username, request.Password);
+
+            if (!success)
+                return Conflict(new { message = "Username already exists." });
+
+            return Ok(new { message = "User registered successfully." });
+        }
     }
 }
