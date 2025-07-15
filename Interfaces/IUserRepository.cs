@@ -7,9 +7,10 @@ namespace SeinfeldAPI.Interfaces
         List<User> GetAllUsers();
         User GetUserById(int id);
         User GetUserByUsername(string username);
-        void AddUser(User user);
-        void UpdateUser(User user);
-        void DeleteUser(int id);
+        bool AddUser(User user);
+        bool UpdateUser(User user);
+        bool DeleteUser(int id);
+        bool SaveChanges();
 
     }
 }
