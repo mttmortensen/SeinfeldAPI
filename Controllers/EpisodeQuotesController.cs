@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using SeinfeldAPI.Interfaces;
 using SeinfeldAPI.Models.DTOs;
 
 namespace SeinfeldAPI.Controllers
 {
+    // Can now use jwt here with username and password
+    [Authorize]
+
     // I'll be doing RateLimiting at the Controller level
     // If this scales out then I can apply this down to more specific routes
     [EnableRateLimiting("fixed")]
