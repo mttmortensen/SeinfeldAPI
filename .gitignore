@@ -370,6 +370,7 @@ SeinfeldAPI.csproj
 SeinfeldAPI.sln
 appsettings.Development.json
 appsettings.json
+seinfeld-api.env
 
 # User settings
 *.user

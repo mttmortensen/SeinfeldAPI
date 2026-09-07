@@ -37,7 +37,7 @@ namespace SeinfeldAPI
 
             // Database Context
             builder.Services.AddDbContext<SeinfeldDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Controllers and JSON options
             builder.Services.AddControllers()
