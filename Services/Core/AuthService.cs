@@ -23,9 +23,9 @@ namespace SeinfeldAPI.Services.Core
 
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
 
-            User newUser = new User 
+            User newUser = new User
             {
-                Username = username,
+                Username = username.ToLower(),
                 PasswordHash = hashedPassword
             };
 
