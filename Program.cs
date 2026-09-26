@@ -120,6 +120,10 @@ namespace SeinfeldAPI
             /* =======================================================
              * RATE LIMITING
              * ======================================================= */
+
+            // Only these hosts (the NGINX reverse proxy) may supply the client IP via CF-Connecting-IP
+            _trustedProxies = builder.Configuration.GetSection("TrustedProxies").Get<string[]>() ?? [];
+
             builder.Services.AddRateLimiter(options =>
             {
                 options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
@@ -192,14 +196,19 @@ namespace SeinfeldAPI
             app.Run();
         }
 
+        private static string[] _trustedProxies = [];
+
         // Behind Cloudflare Tunnel + NGINX every request arrives from the proxy,
-        // so the real client IP comes from Cloudflare's CF-Connecting-IP header
+        // so the real client IP comes from Cloudflare's CF-Connecting-IP header.
+        // The header is ignored from anyone else so LAN clients can't spoof it.
         private static string GetClientIp(HttpContext context)
         {
+            string remoteIp = context.Connection.RemoteIpAddress?.MapToIPv4().ToString() ?? "unknown";
             string? cfIp = context.Request.Headers["CF-Connecting-IP"].FirstOrDefault();
-            return !string.IsNullOrWhiteSpace(cfIp)
+
+            return _trustedProxies.Contains(remoteIp) && !string.IsNullOrWhiteSpace(cfIp)
                 ? cfIp
-                : context.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+                : remoteIp;
         }
     }
 }

@@ -122,8 +122,8 @@ namespace SeinfeldAPI.Services.Core
         // Delete a quote by ID
         public bool DeleteQuote(int id)
         {
-            _quotesRepo.DeleteQuote(id);
-            return _quotesRepo.SaveChanges();
+            // Repo returns false when the quote doesn't exist
+            return _quotesRepo.DeleteQuote(id);
         }
 
         // Resolves EpisodeId from either direct Id or from Title + Season

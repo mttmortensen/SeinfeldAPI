@@ -135,8 +135,8 @@ namespace SeinfeldAPI.Services.Core
         // Delete an episode by ID
         public bool DeleteEpisode(int id)
         {
-            _episodeRepo.DeleteEpisode(id);
-            return _episodeRepo.SaveChanges();
+            // Repo returns false when the episode doesn't exist
+            return _episodeRepo.DeleteEpisode(id);
         }
     }
 }
