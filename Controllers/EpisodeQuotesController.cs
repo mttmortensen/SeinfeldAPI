@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using SeinfeldAPI.Interfaces;
+using SeinfeldAPI.Models;
 using SeinfeldAPI.Models.DTOs;
 
 namespace SeinfeldAPI.Controllers
@@ -83,6 +84,7 @@ namespace SeinfeldAPI.Controllers
         /// </summary>
         /// <param name="quote">The quote data to add.</param>
         /// <returns>201 Created if successful, or 400 if the quote could not be added.</returns>
+        [Authorize(Roles = Roles.Admin)]
         [HttpPost]
         public ActionResult AddQuote([FromBody] QuoteCreateDto quote)
         {
@@ -103,6 +105,7 @@ namespace SeinfeldAPI.Controllers
         /// <param name="id">The ID of the quote to update.</param>
         /// <param name="quote">The updated quote data.</param>
         /// <returns>204 No Content if successful, 400 if the ID is mismatched, or 404 if not found.</returns>
+        [Authorize(Roles = Roles.Admin)]
         [HttpPut("{id}")]
         public ActionResult UpdateQuote(int id, [FromBody] QuoteUpdateDto quote)
         {
@@ -123,6 +126,7 @@ namespace SeinfeldAPI.Controllers
         /// </summary>
         /// <param name="id">The ID of the quote to delete.</param>
         /// <returns>204 No Content if deleted, or 404 if not found.</returns>
+        [Authorize(Roles = Roles.Admin)]
         [HttpDelete("{id}")]
         public ActionResult DeleteQuote(int id)
         {

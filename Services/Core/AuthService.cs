@@ -26,7 +26,8 @@ namespace SeinfeldAPI.Services.Core
             User newUser = new User
             {
                 Username = username.ToLower(),
-                PasswordHash = hashedPassword
+                PasswordHash = hashedPassword,
+                Role = Roles.User // Admins are only ever promoted directly in the database
             };
 
             _userRepo.AddUser(newUser);
@@ -40,7 +41,7 @@ namespace SeinfeldAPI.Services.Core
             if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
                 return null;
 
-            return _jwtHelper.GenerateToken(username);
+            return _jwtHelper.GenerateToken(user.Username, user.Role);
         }
     }
 }

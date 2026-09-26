@@ -9,6 +9,7 @@ using SeinfeldAPI.Services;
 using SeinfeldAPI.Services.Core;
 using SeinfeldAPI.Services.Security;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.RateLimiting;
 
@@ -121,13 +122,32 @@ namespace SeinfeldAPI
              * ======================================================= */
             builder.Services.AddRateLimiter(options =>
             {
-                options.AddFixedWindowLimiter(policyName: "fixed", config =>
-                {
-                    config.PermitLimit = 5; // Max 5 requests
-                    config.Window = TimeSpan.FromSeconds(10); // Every 10 seconds
-                    config.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-                    config.QueueLimit = 2;
-                });
+                options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+                // Each client gets its own bucket: logged-in users by username, everyone else by IP
+                options.AddPolicy("fixed", context =>
+                    RateLimitPartition.GetFixedWindowLimiter(
+                        context.User.Identity?.IsAuthenticated == true
+                            ? $"user:{context.User.FindFirstValue(ClaimTypes.NameIdentifier)}"
+                            : $"ip:{GetClientIp(context)}",
+                        _ => new FixedWindowRateLimiterOptions
+                        {
+                            PermitLimit = 5, // Max 5 requests
+                            Window = TimeSpan.FromSeconds(10), // Every 10 seconds
+                            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                            QueueLimit = 2
+                        }));
+
+                // Stricter per-IP limit on login/register to slow password guessing and mass sign-ups
+                options.AddPolicy("auth", context =>
+                    RateLimitPartition.GetFixedWindowLimiter(
+                        $"ip:{GetClientIp(context)}",
+                        _ => new FixedWindowRateLimiterOptions
+                        {
+                            PermitLimit = 5, // Max 5 attempts
+                            Window = TimeSpan.FromMinutes(1), // Every minute
+                            QueueLimit = 0
+                        }));
             });
 
             /* =======================================================
@@ -158,16 +178,28 @@ namespace SeinfeldAPI
             app.UseRouting();
             app.UseHttpsRedirection();
 
+            // Authentication runs first so the rate limiter can partition by user
+            app.UseAuthentication();
+
             // Rate Limiting
             app.UseRateLimiter();
 
-            // Authentication & Authorization (JWT)
-            app.UseAuthentication();
+            // Authorization (JWT roles)
             app.UseAuthorization();
 
             app.MapControllers();
 
             app.Run();
+        }
+
+        // Behind Cloudflare Tunnel + NGINX every request arrives from the proxy,
+        // so the real client IP comes from Cloudflare's CF-Connecting-IP header
+        private static string GetClientIp(HttpContext context)
+        {
+            string? cfIp = context.Request.Headers["CF-Connecting-IP"].FirstOrDefault();
+            return !string.IsNullOrWhiteSpace(cfIp)
+                ? cfIp
+                : context.Connection.RemoteIpAddress?.ToString() ?? "unknown";
         }
     }
 }

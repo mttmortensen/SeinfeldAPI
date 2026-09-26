@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using SeinfeldAPI.Interfaces;
 using SeinfeldAPI.Models.DTOs;
 
 namespace SeinfeldAPI.Controllers
 {
+    // Strict per-IP limit to slow brute-force logins and mass registration
+    [EnableRateLimiting("auth")]
+
     [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase

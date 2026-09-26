@@ -15,7 +15,7 @@ namespace SeinfeldAPI.Services.Security
             _config = config;
         }
 
-        public string GenerateToken(string username)
+        public string GenerateToken(string username, string role)
         {
             // Create a security key from the secret key in appsettings.json
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
@@ -27,6 +27,7 @@ namespace SeinfeldAPI.Services.Security
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, username), // Subject (the user)
+                new Claim(ClaimTypes.Role, role), // Checked by [Authorize(Roles = ...)]
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // Unique token ID
             };
 
