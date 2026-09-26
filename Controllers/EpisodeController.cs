@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using SeinfeldAPI.Interfaces;
+using SeinfeldAPI.Models;
 using SeinfeldAPI.Models.DTOs;
 
 namespace SeinfeldAPI.Controllers
@@ -67,6 +68,7 @@ namespace SeinfeldAPI.Controllers
         /// </summary>
         /// <param name="episodeDto">The episode data to create.</param>
         /// <returns>The created episode, or 400 if creation failed.</returns>
+        [Authorize(Roles = Roles.Admin)]
         [HttpPost]
         public ActionResult AddEpisode([FromBody] EpisodeWithQuotesDto episodeDto)
         {
@@ -84,6 +86,7 @@ namespace SeinfeldAPI.Controllers
         /// <param name="id">The ID of the episode to update.</param>
         /// <param name="episode">The updated episode data.</param>
         /// <returns>204 No Content if successful, 400 or 404 otherwise.</returns>
+        [Authorize(Roles = Roles.Admin)]
         [HttpPut("{id}")]
         public ActionResult UpdateEpisode(int id, [FromBody] EpisodeUpdateDto episode) 
         {
@@ -107,6 +110,7 @@ namespace SeinfeldAPI.Controllers
         /// </summary>
         /// <param name="id">The ID of the episode to delete.</param>
         /// <returns>204 No Content if deleted, 404 if not found.</returns>
+        [Authorize(Roles = Roles.Admin)]
         [HttpDelete("{id}")]
         public ActionResult DeleteEpisode(int id)
         {
