@@ -77,6 +77,19 @@ SeinfeldAPI/
 | PUT    | `/api/episodequotes`      | Update a quote                 |
 | DELETE | `/api/episodequotes/{id}` | Delete a quote                 |
 
+### Quote Entry (used by the [Quote Book frontend](https://github.com/mttmortensen/SeinfeldEntryQuoter))
+
+| Method | Route                                                  | Description                                                    |
+|--------|--------------------------------------------------------|----------------------------------------------------------------|
+| GET    | `/api/episodes/lookup?season={n}&episodeNumber={n}`    | Get an episode by season + number (404 if none)                |
+| PUT    | `/api/episodes/{id}/title`                             | Update just the episode title                                  |
+| GET    | `/api/quotes/recent?limit={n}`                         | Most recently added quotes (default 5)                         |
+| POST   | `/api/quotes`                                          | Add a quote by season + number; creates the episode if missing |
+| PUT    | `/api/quotes/{id}`                                     | Update quote text and speaker                                  |
+| DELETE | `/api/quotes/{id}`                                     | Delete a quote                                                 |
+
+`POST /api/quotes` returns 409 if the same text is already saved for that episode. Episodes are unique on (Season, EpisodeNumber); see `SQL/add_episodes_unique_season_episode.sql`.
+
 ---
 
 ## 📌 Key Features

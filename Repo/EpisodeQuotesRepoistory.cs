@@ -45,6 +45,26 @@ namespace SeinfeldAPI.Repo
                 .FirstOrDefault(q => q.Id == id);
         }
 
+        // Return the newest quotes first (highest Id = most recently added)
+        public List<EpisodeQuotes> GetRecentQuotes(int limit)
+        {
+            return _context.EpisodeQuotes
+                .Include(q => q.Episode)
+                .OrderByDescending(q => q.Id)
+                .Take(limit)
+                .ToList();
+        }
+
+        // Check if the same quote text is already on this episode
+        // excludeId lets an update skip over the quote being edited
+        public bool QuoteExists(int episodeId, string quote, int? excludeId = null)
+        {
+            return _context.EpisodeQuotes
+                .Any(q => q.EpisodeId == episodeId &&
+                          q.Quote == quote &&
+                          (excludeId == null || q.Id != excludeId));
+        }
+
         // Add a new quote (not saved yet)
         public bool AddQuote(EpisodeQuotes quotes) 
         {

@@ -38,3 +38,6 @@ CREATE TABLE "EpisodeQuotes" (
     "Character" VARCHAR(100) NOT NULL,
     CONSTRAINT "FK_EpisodeQuotes_Episodes" FOREIGN KEY ("EpisodeId") REFERENCES "Episodes" ("Id") ON DELETE CASCADE
 );
+
+-- One episode per season + episode number (also in add_episodes_unique_season_episode.sql)
+CREATE UNIQUE INDEX "UX_Episodes_Season_EpisodeNumber" ON "Episodes" ("Season", "EpisodeNumber");

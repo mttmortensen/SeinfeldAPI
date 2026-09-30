@@ -64,6 +64,44 @@ namespace SeinfeldAPI.Controllers
         }
 
         /// <summary>
+        /// Gets a single episode by season and episode number (no quotes).
+        /// </summary>
+        /// <param name="season">The season number (1 or higher).</param>
+        /// <param name="episodeNumber">The episode number within the season (1 or higher).</param>
+        /// <returns>The episode, or 404 if there is no episode for that season and number.</returns>
+        [HttpGet("lookup")]
+        public ActionResult<EpisodeSummaryDto> GetEpisodeBySeasonAndNumber([FromQuery] int season, [FromQuery] int episodeNumber)
+        {
+            if (season < 1 || episodeNumber < 1)
+                return BadRequest(new { message = "Season and episode must be 1 or higher." });
+
+            EpisodeSummaryDto episode = _episodeService.GetEpisodeBySeasonAndNumber(season, episodeNumber);
+
+            if (episode == null)
+                return NotFound();
+
+            return Ok(episode);
+        }
+
+        /// <summary>
+        /// Updates only the title of an episode.
+        /// </summary>
+        /// <param name="id">The ID of the episode to update.</param>
+        /// <param name="dto">The new title.</param>
+        /// <returns>204 No Content if successful, 404 if the episode doesn't exist.</returns>
+        [Authorize(Roles = Roles.Admin)]
+        [HttpPut("{id}/title")]
+        public ActionResult UpdateEpisodeTitle(int id, [FromBody] EpisodeTitleUpdateDto dto)
+        {
+            bool success = _episodeService.UpdateEpisodeTitle(id, dto.Title);
+
+            if (!success)
+                return NotFound();
+
+            return NoContent();
+        }
+
+        /// <summary>
         /// Creates a new episode with optional quotes.
         /// </summary>
         /// <param name="episodeDto">The episode data to create.</param>
