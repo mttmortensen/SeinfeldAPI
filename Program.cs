@@ -155,6 +155,23 @@ namespace SeinfeldAPI
             });
 
             /* =======================================================
+             * CORS (LOCAL DEV ONLY)
+             * Lets the quote entry frontend (SeinfeldEntryQuoter)
+             * call the API when it's served from localhost
+             * ======================================================= */
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("LocalFrontend", policy =>
+                {
+                    policy.SetIsOriginAllowed(origin =>
+                            Uri.TryCreate(origin, UriKind.Absolute, out var uri) &&
+                            (uri.Host == "localhost" || uri.Host == "127.0.0.1"))
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
+            /* =======================================================
              * KESTREL CONFIGURATION
              * ======================================================= */
             builder.WebHost.ConfigureKestrel((context, options) =>
@@ -181,6 +198,11 @@ namespace SeinfeldAPI
 
             app.UseRouting();
             app.UseHttpsRedirection();
+
+            // CORS for the local quote entry frontend (not enabled in production)
+            // Before auth so browser preflight requests get answered
+            if (app.Environment.IsDevelopment())
+                app.UseCors("LocalFrontend");
 
             // Authentication runs first so the rate limiter can partition by user
             app.UseAuthentication();

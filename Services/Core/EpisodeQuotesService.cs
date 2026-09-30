@@ -126,6 +126,99 @@ namespace SeinfeldAPI.Services.Core
             return _quotesRepo.DeleteQuote(id);
         }
 
+        // Get the most recently added quotes (for the quote entry frontend)
+        public List<QuoteEntryDto> GetRecentQuotes(int limit)
+        {
+            return _quotesRepo.GetRecentQuotes(limit)
+                .Select(ToQuoteEntryDto)
+                .ToList();
+        }
+
+        // Add a quote by Season + EpisodeNumber
+        // Creates the episode (with EpisodeTitle) if it doesn't exist yet
+        // Rejects the same quote text on the same episode
+        public (QuoteEntryStatus Status, QuoteEntryDto? Quote) AddQuoteEntry(QuoteEntryCreateDto quoteDto)
+        {
+            string season = quoteDto.Season.ToString();
+            string episodeNumber = quoteDto.EpisodeNumber.ToString();
+            string text = quoteDto.Text.Trim();
+
+            var quote = new EpisodeQuotes
+            {
+                Quote = text,
+                Character = quoteDto.Speaker.Trim()
+            };
+
+            Episode episode = _episodeRepo.GetEpisodeBySeasonAndNumber(season, episodeNumber);
+
+            if (episode == null)
+            {
+                // New episode, so we need a title for it
+                if (string.IsNullOrWhiteSpace(quoteDto.EpisodeTitle))
+                    return (QuoteEntryStatus.EpisodeTitleRequired, null);
+
+                episode = new Episode
+                {
+                    Title = quoteDto.EpisodeTitle.Trim(),
+                    Season = season,
+                    EpisodeNumber = episodeNumber,
+                    Quotes = new List<EpisodeQuotes> { quote }
+                };
+                quote.Episode = episode;
+
+                // Saves the episode and the quote together
+                _episodeRepo.AddEpisode(episode);
+            }
+            else
+            {
+                if (_quotesRepo.QuoteExists(episode.Id, text))
+                    return (QuoteEntryStatus.Duplicate, null);
+
+                quote.EpisodeId = episode.Id;
+                quote.Episode = episode;
+                _quotesRepo.AddQuote(quote);
+            }
+
+            return (QuoteEntryStatus.Success, ToQuoteEntryDto(quote));
+        }
+
+        // Update the text and speaker of a quote
+        public QuoteEntryStatus UpdateQuoteEntry(int id, QuoteEntryUpdateDto quoteDto)
+        {
+            EpisodeQuotes existing = _quotesRepo.GetQuoteById(id);
+            if (existing == null)
+                return QuoteEntryStatus.NotFound;
+
+            string text = quoteDto.Text.Trim();
+
+            if (_quotesRepo.QuoteExists(existing.EpisodeId, text, excludeId: id))
+                return QuoteEntryStatus.Duplicate;
+
+            existing.Quote = text;
+            existing.Character = quoteDto.Speaker.Trim();
+
+            _quotesRepo.UpdateQuote(existing);
+            return QuoteEntryStatus.Success;
+        }
+
+        // Maps a quote (with its Episode loaded) to the quote entry Dto
+        private static QuoteEntryDto ToQuoteEntryDto(EpisodeQuotes q)
+        {
+            int.TryParse(q.Episode.Season, out int season);
+            int.TryParse(q.Episode.EpisodeNumber, out int episodeNumber);
+
+            return new QuoteEntryDto
+            {
+                Id = q.Id,
+                Text = q.Quote,
+                Speaker = q.Character,
+                EpisodeId = q.EpisodeId,
+                Season = season,
+                EpisodeNumber = episodeNumber,
+                EpisodeTitle = q.Episode.Title
+            };
+        }
+
         // Resolves EpisodeId from either direct Id or from Title + Season
         private int? ResolveEpisodeId(IEpisodeResolvable dto) 
         {

@@ -138,5 +138,36 @@ namespace SeinfeldAPI.Services.Core
             // Repo returns false when the episode doesn't exist
             return _episodeRepo.DeleteEpisode(id);
         }
+
+        // Find an episode by season + episode number
+        // Season and EpisodeNumber are stored as plain number strings ("4", "11")
+        public EpisodeSummaryDto? GetEpisodeBySeasonAndNumber(int season, int episodeNumber)
+        {
+            Episode episode = _episodeRepo.GetEpisodeBySeasonAndNumber(season.ToString(), episodeNumber.ToString());
+
+            if (episode == null)
+                return null;
+
+            return new EpisodeSummaryDto
+            {
+                Id = episode.Id,
+                Title = episode.Title,
+                Season = season,
+                EpisodeNumber = episodeNumber
+            };
+        }
+
+        // Update only the title of an episode
+        public bool UpdateEpisodeTitle(int id, string title)
+        {
+            Episode exisiting = _episodeRepo.GetEpisodeById(id);
+            if (exisiting == null)
+                return false;
+
+            exisiting.Title = title.Trim();
+
+            _episodeRepo.UpdateEpisode(exisiting);
+            return _episodeRepo.SaveChanges();
+        }
     }
 }

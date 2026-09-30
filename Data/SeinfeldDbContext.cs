@@ -19,5 +19,14 @@ namespace SeinfeldAPI.Data
         // We're now creating a table for EF to use for Users domain
         public DbSet<User> Users { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Only one episode per season + episode number
+            // Matches SQL/add_episodes_unique_season_episode.sql
+            modelBuilder.Entity<Episode>()
+                .HasIndex(e => new { e.Season, e.EpisodeNumber })
+                .IsUnique();
+        }
+
     }
 }

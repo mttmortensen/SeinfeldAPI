@@ -32,6 +32,14 @@ namespace SeinfeldAPI.Repo
                 .FirstOrDefault(e => e.Id == id);
         }
 
+        // Returns a single Episode by Season + EpisodeNumber (null if not found)
+        // No quotes included, this is just for looking up the episode
+        public Episode? GetEpisodeBySeasonAndNumber(string season, string episodeNumber)
+        {
+            return _context.Episodes
+                .FirstOrDefault(e => e.Season == season && e.EpisodeNumber == episodeNumber);
+        }
+
         // Adds a new option to the database
         public bool AddEpisode(Episode episode) 
         {
