@@ -155,9 +155,11 @@ namespace SeinfeldAPI
             });
 
             /* =======================================================
-             * CORS (LOCAL DEV ONLY)
+             * CORS
              * Lets the quote entry frontend (SeinfeldEntryQuoter)
-             * call the API when it's served from localhost
+             * call the API when it's served from localhost.
+             * Only localhost origins are allowed, and the API uses
+             * bearer tokens (no cookies).
              * ======================================================= */
             builder.Services.AddCors(options =>
             {
@@ -199,10 +201,9 @@ namespace SeinfeldAPI
             app.UseRouting();
             app.UseHttpsRedirection();
 
-            // CORS for the local quote entry frontend (not enabled in production)
+            // CORS for the local quote entry frontend
             // Before auth so browser preflight requests get answered
-            if (app.Environment.IsDevelopment())
-                app.UseCors("LocalFrontend");
+            app.UseCors("LocalFrontend");
 
             // Authentication runs first so the rate limiter can partition by user
             app.UseAuthentication();
